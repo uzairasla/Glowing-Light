@@ -1,0 +1,25 @@
+{
+  "name": "guiding-light",
+  "private": true,
+  "packageManager": "pnpm@11.7.0",
+  "scripts": {
+    "build": "turbo build",
+    "build:studio": "pnpm --filter @guiding-light/studio build",
+    "build:web": "pnpm --filter @guiding-light/web build",
+    "dev": "turbo dev",
+    "dev:studio": "pnpm --filter @guiding-light/studio dev",
+    "dev:web": "pnpm --filter @guiding-light/web dev",
+    "lint": "turbo lint",
+    "seed:article": "pnpm --filter @guiding-light/studio seed:article",
+    "start:web": "pnpm --filter @guiding-light/web start",
+    "typecheck": "turbo typecheck",
+    "typecheck:studio": "pnpm --filter @guiding-light/studio typecheck",
+    "typecheck:web": "pnpm --filter @guiding-light/web typecheck",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "turbo": "^2.1.3",
+    "typescript": "^5.6.2"
+  }
+}

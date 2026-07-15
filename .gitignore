@@ -1,0 +1,13 @@
+.turbo
+.tools
+.codex
+.agents
+.next
+node_modules
+dist
+.env
+.env.local
+.env.*.local
+*.tsbuildinfo
+coverage
+apps/studio/.sanity

@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "plugins": [{ "name": "next" }],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@guiding-light/learning-engine": ["../../packages/learning-engine/src/index.ts"],
+      "@guiding-light/types": ["../../packages/types/src/index.ts"],
+      "@guiding-light/validation": ["../../packages/validation/src/index.ts"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

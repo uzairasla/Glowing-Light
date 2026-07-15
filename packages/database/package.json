@@ -1,0 +1,10 @@
+{
+  "name": "@guiding-light/database",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "echo \"SQL migrations only\"",
+    "lint": "echo \"SQL migrations only\"",
+    "typecheck": "echo \"SQL migrations only\""
+  }
+}
