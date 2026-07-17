@@ -4,9 +4,11 @@
   "packageManager": "pnpm@11.7.0",
   "scripts": {
     "build": "turbo build",
+    "build:health-blog": "pnpm --filter @guiding-light/health-blog build",
     "build:studio": "pnpm --filter @guiding-light/studio build",
     "build:web": "pnpm --filter @guiding-light/web build",
     "dev": "turbo dev",
+    "dev:health-blog": "pnpm --filter @guiding-light/health-blog dev",
     "dev:studio": "pnpm --filter @guiding-light/studio dev",
     "dev:web": "pnpm --filter @guiding-light/web dev",
     "lint": "turbo lint",

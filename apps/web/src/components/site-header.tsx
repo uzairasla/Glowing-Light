@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { Compass, Menu } from "lucide-react";
+import { MoonStar, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/lib/auth/session";
 
 const links = [
+  { href: "/journeys", label: "Learn" },
   { href: "/questions", label: "Questions" },
-  { href: "/journeys", label: "Journeys" },
-  { href: "/guides/new-muslim", label: "New Muslim" },
-  { href: "/compare", label: "Compare" },
+  { href: "/my-journey", label: "My Journey" },
+  { href: "/guides/new-muslim", label: "New Muslims" },
 ];
 
 export async function SiteHeader() {
@@ -18,7 +18,7 @@ export async function SiteHeader() {
       <div className="container flex min-h-[72px] items-center justify-between gap-4">
         <Link href="/" className="inline-flex items-center gap-3 font-extrabold tracking-normal">
           <span className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-teal to-[#075961] text-white shadow-[0_8px_22px_rgba(13,125,131,.25)]">
-            <Compass className="size-5" aria-hidden="true" />
+            <MoonStar className="size-5" aria-hidden="true" />
           </span>
           <span>Guiding Light</span>
         </Link>
