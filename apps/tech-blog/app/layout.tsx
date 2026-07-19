@@ -4,23 +4,33 @@ import "../src/styles.css";
 import "../src/article.css";
 
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "http://localhost:3002");
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://devfieldnotes.dev";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Fieldnotes - Practical guides for technical work",
+  title: {
+    default: "Dev Fieldnotes - Tested solutions for modern web development",
+    template: "%s | Dev Fieldnotes",
+  },
   description:
-    "Field-tested technical guides and ready-to-use templates for people who build.",
+    "Practical, tested guides for debugging Next.js, Sanity, deployment, caching, and modern web development.",
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Fieldnotes - Practical guides. Proven templates.",
+    title: "Dev Fieldnotes - Tested solutions for modern web development",
     description:
-      "Field-tested technical guides and ready-to-use templates for people who build.",
+      "Practical, tested guides for debugging Next.js, Sanity, deployment, caching, and modern web development.",
+    url: "/",
+    siteName: "Dev Fieldnotes",
+    images: ["/og.png"],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dev Fieldnotes - Tested solutions for modern web development",
+    description:
+      "Practical, tested guides for debugging Next.js, Sanity, deployment, caching, and modern web development.",
     images: ["/og.png"],
   },
-  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -28,11 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"

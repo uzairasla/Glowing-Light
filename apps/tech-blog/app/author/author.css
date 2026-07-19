@@ -1,0 +1,16 @@
+.author-page { min-height: 100vh; background: var(--paper); color: var(--ink); }
+.author-hero { padding: 90px clamp(22px, 8vw, 130px); background: var(--ink); color: var(--paper); }
+.author-hero .section-index { color: var(--lime); }
+.author-hero h1 { margin: 56px 0 28px; font-size: clamp(76px, 14vw, 190px); line-height: .8; letter-spacing: -.08em; }
+.author-hero p { max-width: 830px; margin: 0; color: #c9c5bc; font-size: clamp(20px, 2.4vw, 30px); line-height: 1.5; letter-spacing: -.025em; }
+.author-body { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(48px, 9vw, 150px); padding: 100px clamp(22px, 8vw, 130px) 130px; }
+.author-body h2 { max-width: 620px; margin: 32px 0 0; font-size: clamp(44px, 6vw, 78px); line-height: .95; letter-spacing: -.06em; }
+.author-copy p { margin: 0 0 28px; color: #44413d; font-size: 18px; line-height: 1.75; }
+.author-cta { display: inline-flex; margin-top: 18px; padding: 15px 20px; background: var(--ink); color: var(--lime); font: 500 10px var(--mono); text-transform: uppercase; letter-spacing: .05em; }
+.author-footer { display: flex; justify-content: space-between; gap: 24px; padding: 36px clamp(22px, 8vw, 130px); background: var(--lime); }
+.author-footer strong { letter-spacing: .12em; }
+.author-footer span { font: 400 10px var(--mono); }
+@media (max-width: 800px) {
+  .author-body { grid-template-columns: 1fr; padding-block: 72px 90px; }
+  .author-footer { flex-direction: column; }
+}

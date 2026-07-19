@@ -52,16 +52,16 @@ function ArticleHeader() {
   const [open, setOpen] = useState(false);
   return (
     <header className="topbar article-topbar">
-      <a className="brand" href="/" aria-label="Fieldnotes home">
+      <a className="brand" href="/" aria-label="Dev Fieldnotes home">
         <span className="brand-mark" aria-hidden="true">
-          F<span>/</span>N
+          D<span>/</span>F
         </span>
-        <span>FIELDNOTES</span>
+        <span>DEV FIELDNOTES</span>
       </a>
       <nav className={open ? "nav open" : "nav"} aria-label="Main navigation">
         <a href="/#guides">Guides</a>
-        <a href="/#templates">Templates</a>
         <a href="/#about">About</a>
+        <a href="/author">Author</a>
       </nav>
       <button
         className="menu-button"
@@ -215,6 +215,7 @@ export function SanityUpdatingArticle({ article }: { article: TechArticle }) {
           <h1>{article.title}</h1>
           <p className="article-deck">{article.description}</p>
           <div className="article-meta">
+            <a className="article-author" href="/author">By Uzair</a>
             <span>
               <Clock3 size={15} /> {article.readTime || "18 min"} read
             </span>
@@ -260,16 +261,16 @@ export function SanityUpdatingArticle({ article }: { article: TechArticle }) {
               <a href="/">
                 <ArrowLeft size={17} /> Back to all guides
               </a>
-              <a href="/#templates">
-                Explore field-tested templates <ArrowRight size={17} />
+              <a href="/">
+                Explore Dev Fieldnotes <ArrowRight size={17} />
               </a>
             </nav>
           </article>
         </div>
       </main>
       <footer className="article-footer">
-        <span>FIELDNOTES</span>
-        <small>Practical guides for technical work.</small>
+        <span>DEV FIELDNOTES</span>
+        <small>Tested solutions for modern web development.</small>
         <CopyArticleLink />
       </footer>
     </div>
