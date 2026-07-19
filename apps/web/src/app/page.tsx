@@ -80,11 +80,6 @@ export default async function HomePage() {
                 <Link href="/journeys">Explore learning paths</Link>
               </Button>
             </div>
-            <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-sm text-slate-300">
-              {['Free to explore', 'Private by design', 'Source-backed'].map((item) => (
-                <span key={item} className="flex items-center gap-2"><Check className="size-4 text-[#e6bd69]" />{item}</span>
-              ))}
-            </div>
           </div>
 
           <div className="relative mx-auto w-full max-w-md">
