@@ -59,7 +59,7 @@ button { color: inherit; }
 .eyebrow span { color: var(--lime); }
 .hero h1 { position: relative; z-index: 1; margin: 70px 0 50px; max-width: 970px; font-size: clamp(55px, 8vw, 126px); line-height: .85; letter-spacing: -.075em; }
 .hero h1 em { color: var(--lime); font-style: normal; }
-.hero-lower { position: relative; z-index: 1; display: flex; align-items: end; gap: 64px; max-width: 840px; }
+.hero-lower { position: relative; z-index: 1; display: flex; align-items: flex-end; gap: 64px; max-width: 840px; }
 .hero-lower p { max-width: 440px; margin: 0; color: #cbc7bd; line-height: 1.65; font-size: 17px; }
 .primary-button, .dark-button {
   display: inline-flex; align-items: center; justify-content: center; gap: 14px;
@@ -80,7 +80,7 @@ button { color: inherit; }
 .ticker span { display: flex; align-items: center; gap: 8px; }
 
 .content-section { padding: 100px clamp(20px, 5vw, 80px) 120px; }
-.section-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 38px; }
+.section-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 38px; }
 .section-index { display: block; margin-bottom: 22px; color: #6e6b65; }
 .section-heading h2, .template-intro h2, .newsletter h2, .manifesto h2 { margin: 0; font-size: clamp(38px, 5vw, 70px); line-height: .98; letter-spacing: -.055em; }
 .section-heading > a { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; border-bottom: 1px solid; font: 500 11px var(--mono); }
@@ -102,7 +102,7 @@ button { color: inherit; }
 .diagram::after { inset: 45px; }
 .diagram span:nth-child(1) { width: 1px; height: 180px; border: 0; border-left: 1px solid; top: -16px; left: 74px; }
 .diagram span:nth-child(2) { width: 180px; height: 1px; border: 0; border-top: 1px solid; top: 74px; left: -16px; }
-.article-body { padding: 28px 26px 32px; min-height: 320px; display: flex; flex-direction: column; align-items: start; }
+.article-body { padding: 28px 26px 32px; min-height: 320px; display: flex; flex-direction: column; align-items: flex-start; }
 .reading-time { display: flex; align-items: center; gap: 7px; color: #6e6b65; font: 400 10px var(--mono); text-transform: uppercase; }
 .article-body h3 { margin: 24px 0 14px; font-size: 23px; line-height: 1.18; letter-spacing: -.035em; }
 .article-body p { margin: 0 0 28px; color: #5e5b56; line-height: 1.6; font-size: 14px; }
@@ -114,7 +114,7 @@ button { color: inherit; }
 }
 .manifesto .section-index { color: #cbd4ff; }
 .manifesto-copy p { max-width: 620px; margin: 30px 0 0; color: #dfe4ff; line-height: 1.7; }
-.principles { display: flex; flex-direction: column; justify-content: end; gap: 14px; }
+.principles { display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; }
 .principles span { display: flex; align-items: center; gap: 10px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.3); font: 400 11px var(--mono); }
 .principles svg { color: var(--lime); }
 
@@ -173,10 +173,10 @@ footer { min-height: 140px; display: flex; align-items: center; gap: 40px; paddi
   .shop-link { padding: 9px 11px; }
   .hero { min-height: 580px; padding-top: 44px; }
   .hero h1 { margin: 65px 0 38px; font-size: clamp(52px, 16vw, 82px); }
-  .hero-lower { flex-direction: column; align-items: start; gap: 30px; }
+  .hero-lower { flex-direction: column; align-items: flex-start; gap: 30px; }
   .hero-aside, .hero::after { display: none; }
   .ticker { justify-content: start; }
-  .section-heading { align-items: start; flex-direction: column; }
+  .section-heading { align-items: flex-start; flex-direction: column; }
   .content-section { padding-top: 72px; padding-bottom: 80px; }
   .article-card { grid-template-columns: 1fr; }
   .article-visual { height: 210px; border-right: 0; border-bottom: 1px solid var(--ink); }
@@ -188,7 +188,7 @@ footer { min-height: 140px; display: flex; align-items: center; gap: 40px; paddi
   .newsletter { grid-template-columns: 1fr; gap: 45px; padding-block: 70px; }
   .newsletter form { align-items: stretch; }
   .newsletter button { padding-inline: 12px; }
-  footer { align-items: start; flex-wrap: wrap; }
+  footer { align-items: flex-start; flex-wrap: wrap; }
   .footer-links { order: 3; width: 100%; margin-left: 0; }
   .copyright { margin-left: auto; }
 }

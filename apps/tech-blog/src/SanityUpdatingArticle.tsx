@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ArrowLeft,
   ArrowRight,
@@ -17,9 +19,6 @@ import type {
   TechArticle,
   TechBodyItem,
 } from "./tech-article";
-import "./article.css";
-
-const articlePath = "/guides/sanity-content-not-updating-nextjs";
 
 function CodeBlock({
   label,

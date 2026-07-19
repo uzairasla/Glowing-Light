@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ArrowRight,
   BookOpen,
@@ -13,8 +15,6 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
-import { SanityUpdatingArticle } from "./SanityUpdatingArticle";
-import type { TechArticle } from "./tech-article";
 
 const topics = [
   "All",
@@ -83,7 +83,7 @@ const templates = [
   },
 ];
 
-function Home() {
+export function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTopic, setActiveTopic] = useState("All");
   const [email, setEmail] = useState("");
@@ -355,23 +355,5 @@ function Home() {
         <span className="copyright">{"\u00A9"} 2026 Fieldnotes</span>
       </footer>
     </div>
-  );
-}
-
-export function App({
-  pathname,
-  article,
-}: {
-  pathname?: string;
-  article?: TechArticle | null;
-}) {
-  const currentPath =
-    pathname ??
-    (typeof window === "undefined" ? "/" : window.location.pathname);
-  return currentPath === "/guides/sanity-content-not-updating-nextjs" &&
-    article ? (
-    <SanityUpdatingArticle article={article} />
-  ) : (
-    <Home />
   );
 }

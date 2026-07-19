@@ -50,10 +50,10 @@ const callout = (tone, title, body) => ({
 const article = {
   _id: "tech-article-sanity-content-not-updating-nextjs",
   _type: "techArticle",
-  title: "Sanity content isn�t updating in Next.js.",
+  title: "Sanity content isn\u2019t updating in Next.js.",
   slug: { _type: "slug", current: "sanity-content-not-updating-nextjs" },
   description:
-    "A systematic guide to finding stale content across drafts, perspectives, the Sanity CDN, Next.js caches, and revalidation�without guessing which cache to clear.",
+    "A systematic guide to finding stale content across drafts, perspectives, the Sanity CDN, Next.js caches, and revalidation\u2014without guessing which cache to clear.",
   kicker: "Sanity field guide 001",
   readTime: "18 min",
   publishedAt: "2026-07-18T12:00:00.000Z",
@@ -95,14 +95,14 @@ const article = {
   ],
   body: [
     p(
-      "You publish a change in Sanity Studio. The document looks correct in Vision. You refresh the Next.js page�and the old copy is still there. This feels like one caching problem. It usually is not.",
+      "You publish a change in Sanity Studio. The document looks correct in Vision. You refresh the Next.js page\u2014and the old copy is still there. This feels like one caching problem. It usually is not.",
     ),
     p(
-      "A Sanity document passes through several independent decisions before it reaches a visitor: which document version is visible, which query perspective is active, whether Sanity�s CDN can answer the request, whether Next.js cached the data or route, and what event invalidates that cache. Debugging gets fast once you test those decisions in order.",
+      "A Sanity document passes through several independent decisions before it reaches a visitor: which document version is visible, which query perspective is active, whether Sanity\u2019s CDN can answer the request, whether Next.js cached the data or route, and what event invalidates that cache. Debugging gets fast once you test those decisions in order.",
     ),
     h2("There are four places an update can disappear"),
     p(
-      "Sanity stores drafts as separate documents with a drafts. prefix. Publishing copies the draft into its canonical document ID. Since API version 2025-02-19, the default query perspective is published, so a normal production request will not return unpublished edits. That is correct behavior�not stale data.",
+      "Sanity stores drafts as separate documents with a drafts. prefix. Publishing copies the draft into its canonical document ID. Since API version 2025-02-19, the default query perspective is published, so a normal production request will not return unpublished edits. That is correct behavior\u2014not stale data.",
     ),
     callout(
       "tip",
@@ -114,7 +114,7 @@ const article = {
       "Run the smallest possible query against the exact project, dataset, API version, and perspective used by the application. Do not start by changing cache settings.",
     ),
     code(
-      "Terminal � query published content",
+      "Terminal \u2014 query published content",
       "bash",
       "neutral",
       `curl --get \\\n  'https://YOUR_PROJECT.api.sanity.io/v2025-02-19/data/query/production' \\\n  --data-urlencode 'query=*[_type == "post" && slug.current == $slug][0]{_id,_updatedAt,title}' \\\n  --data-urlencode '$slug="your-post"' \\\n  --data-urlencode 'perspective=published'`,
@@ -174,7 +174,7 @@ const article = {
     ),
     h3("6. The app points at another project or dataset"),
     p(
-      "Studio may write to production while a preview deployment reads staging, or local and hosted environments may contain different project IDs. Log identifiers�never tokens�and compare deployed values with Sanity Manage.",
+      "Studio may write to production while a preview deployment reads staging, or local and hosted environments may contain different project IDs. Log identifiers\u2014never tokens\u2014and compare deployed values with Sanity Manage.",
     ),
     h3("7. A referenced document was not published"),
     p(
