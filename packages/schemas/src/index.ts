@@ -570,3 +570,6 @@ const article = defineType({
 });
 
 export const schemaTypes = [article, taxonomy];
+export const glowingLightSchemaTypes = schemaTypes;
+export {healthBlogSchemaTypes} from "./health";
+export {techBlogSchemaTypes} from "./tech";
