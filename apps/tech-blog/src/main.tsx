@@ -1,10 +1,18 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { hydrateRoot } from "react-dom/client";
 import { App } from "./App";
+import type { TechArticle } from "./tech-article";
 import "./styles.css";
 
-createRoot(document.getElementById("root")!).render(
+declare global {
+  interface Window {
+    __TECH_ARTICLE__?: TechArticle;
+  }
+}
+
+hydrateRoot(
+  document.getElementById("root")!,
   <StrictMode>
-    <App />
+    <App article={window.__TECH_ARTICLE__ ?? null} />
   </StrictMode>,
 );

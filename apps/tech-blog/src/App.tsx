@@ -14,14 +14,22 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { SanityUpdatingArticle } from "./SanityUpdatingArticle";
+import type { TechArticle } from "./tech-article";
 
-const topics = ["All", "Sanity", "AI workflows", "Hardware", "DevOps", "Automation"];
+const topics = [
+  "All",
+  "Sanity",
+  "AI workflows",
+  "Hardware",
+  "DevOps",
+  "Automation",
+];
 
 const latest = [
   {
     number: "01",
     category: "Sanity",
-    title: "Sanity content isn’t updating in Next.js",
+    title: "Sanity content isnï¿½t updating in Next.js",
     description:
       "Trace stale content across drafts, perspectives, the Sanity CDN, Next.js caches, and revalidation without guessing.",
     time: "18 min",
@@ -52,21 +60,24 @@ const templates = [
   {
     type: "Notion + Sheets",
     title: "Technical Project Command Center",
-    detail: "Plan, document, and ship complex builds without losing the thread.",
+    detail:
+      "Plan, document, and ship complex builds without losing the thread.",
     price: "$29",
     tag: "BEST SELLER",
   },
   {
     type: "Docs + Checklist",
     title: "Hardware Build & Test Pack",
-    detail: "Assembly travelers, bring-up sheets, and test records ready to adapt.",
+    detail:
+      "Assembly travelers, bring-up sheets, and test records ready to adapt.",
     price: "$39",
     tag: "NEW",
   },
   {
     type: "Notion",
     title: "Engineering Decision Log",
-    detail: "Capture the why behind important technical calls while it is still fresh.",
+    detail:
+      "Capture the why behind important technical calls while it is still fresh.",
     price: "$12",
     tag: "",
   },
@@ -87,17 +98,32 @@ function Home() {
     <div className="site-shell">
       <header className="topbar">
         <a className="brand" href="#" aria-label="Fieldnotes home">
-          <span className="brand-mark" aria-hidden="true">F<span>/</span>N</span>
+          <span className="brand-mark" aria-hidden="true">
+            F<span>/</span>N
+          </span>
           <span>FIELDNOTES</span>
         </a>
-        <nav className={menuOpen ? "nav open" : "nav"} aria-label="Main navigation">
-          <a href="#guides" onClick={() => setMenuOpen(false)}>Guides</a>
-          <a href="#templates" onClick={() => setMenuOpen(false)}>Templates</a>
-          <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+        <nav
+          className={menuOpen ? "nav open" : "nav"}
+          aria-label="Main navigation"
+        >
+          <a href="#guides" onClick={() => setMenuOpen(false)}>
+            Guides
+          </a>
+          <a href="#templates" onClick={() => setMenuOpen(false)}>
+            Templates
+          </a>
+          <a href="#about" onClick={() => setMenuOpen(false)}>
+            About
+          </a>
         </nav>
         <div className="header-actions">
-          <button className="icon-button" aria-label="Search"><Search size={19} /></button>
-          <a className="shop-link" href="#templates"><ShoppingBag size={17} /> Shop</a>
+          <button className="icon-button" aria-label="Search">
+            <Search size={19} />
+          </button>
+          <a className="shop-link" href="#templates">
+            <ShoppingBag size={17} /> Shop
+          </a>
           <button
             className="menu-button"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -112,8 +138,14 @@ function Home() {
       <main>
         <section className="hero">
           <div className="hero-grid" aria-hidden="true" />
-          <div className="eyebrow"><span>Issue 001</span> Knowledge for people who build</div>
-          <h1>Technical work,<br /><em>made practical.</em></h1>
+          <div className="eyebrow">
+            <span>Issue 001</span> Knowledge for people who build
+          </div>
+          <h1>
+            Technical work,
+            <br />
+            <em>made practical.</em>
+          </h1>
           <div className="hero-lower">
             <p>
               Field-tested guides, useful systems, and ready-to-run templates
@@ -132,7 +164,9 @@ function Home() {
         </section>
 
         <section className="ticker" aria-label="Site highlights">
-          <span><Sparkles size={15} /> New practical guide every weekday</span>
+          <span>
+            <Sparkles size={15} /> New practical guide every weekday
+          </span>
           <span>///</span>
           <span>Built for engineers, operators & technical teams</span>
           <span>///</span>
@@ -145,7 +179,9 @@ function Home() {
               <span className="section-index">01 / THE LATEST</span>
               <h2>Start here. Build better.</h2>
             </div>
-            <a href="#all-guides">View all guides <ArrowRight size={17} /></a>
+            <a href="#all-guides">
+              View all guides <ArrowRight size={17} />
+            </a>
           </div>
           <div className="topic-filter" aria-label="Filter articles">
             {topics.map((topic) => (
@@ -160,9 +196,15 @@ function Home() {
           </div>
           <div className="article-grid">
             {latest
-              .filter((item) => activeTopic === "All" || item.category === activeTopic)
+              .filter(
+                (item) =>
+                  activeTopic === "All" || item.category === activeTopic,
+              )
               .map((item) => (
-                <article className={`article-card ${item.accent}`} key={item.number}>
+                <article
+                  className={`article-card ${item.accent}`}
+                  key={item.number}
+                >
                   <div className="article-visual">
                     <span className="article-number">{item.number}</span>
                     <div className="diagram">
@@ -173,10 +215,14 @@ function Home() {
                     <span className="article-category">{item.category}</span>
                   </div>
                   <div className="article-body">
-                    <div className="reading-time"><Clock3 size={14} /> {item.time} read</div>
+                    <div className="reading-time">
+                      <Clock3 size={14} /> {item.time} read
+                    </div>
                     <h3>{item.title}</h3>
                     <p>{item.description}</p>
-                    <a href={item.href ?? "#article"}>Read the field guide <ChevronRight size={16} /></a>
+                    <a href={item.href ?? "#article"}>
+                      Read the field guide <ChevronRight size={16} />
+                    </a>
                   </div>
                 </article>
               ))}
@@ -186,7 +232,11 @@ function Home() {
         <section className="manifesto" id="about">
           <span className="section-index">02 / WHY FIELDNOTES</span>
           <div className="manifesto-copy">
-            <h2>We learn by doing.<br />Then we document it.</h2>
+            <h2>
+              We learn by doing.
+              <br />
+              Then we document it.
+            </h2>
             <p>
               The internet has enough theory. Fieldnotes is about the exact
               steps, overlooked details, and reusable tools that move technical
@@ -194,9 +244,15 @@ function Home() {
             </p>
           </div>
           <div className="principles">
-            <span><Check size={17} /> Tested in real workflows</span>
-            <span><Check size={17} /> Written for practitioners</span>
-            <span><Check size={17} /> Updated as tools change</span>
+            <span>
+              <Check size={17} /> Tested in real workflows
+            </span>
+            <span>
+              <Check size={17} /> Written for practitioners
+            </span>
+            <span>
+              <Check size={17} /> Updated as tools change
+            </span>
           </div>
         </section>
 
@@ -208,13 +264,21 @@ function Home() {
               Thoughtful templates built from real technical work. Download
               once, adapt forever.
             </p>
-            <a className="dark-button" href="#store">Browse all templates <ArrowRight size={18} /></a>
+            <a className="dark-button" href="#store">
+              Browse all templates <ArrowRight size={18} />
+            </a>
           </div>
           <div className="template-list">
             {templates.map((template, index) => (
               <a className="template-card" href="#product" key={template.title}>
                 <div className="template-icon">
-                  {index === 0 ? <FileStack /> : index === 1 ? <Box /> : <BookOpen />}
+                  {index === 0 ? (
+                    <FileStack />
+                  ) : index === 1 ? (
+                    <Box />
+                  ) : (
+                    <BookOpen />
+                  )}
                 </div>
                 <div className="template-copy">
                   <span>{template.type}</span>
@@ -234,15 +298,26 @@ function Home() {
         <section className="newsletter">
           <div>
             <span className="section-index">THE WEEKLY DISPATCH</span>
-            <h2>One useful thing,<br />every Friday.</h2>
+            <h2>
+              One useful thing,
+              <br />
+              every Friday.
+            </h2>
           </div>
           <div className="newsletter-form-wrap">
-            <p>Our best guide, a tool worth trying, and one idea to make your work better.</p>
+            <p>
+              Our best guide, a tool worth trying, and one idea to make your
+              work better.
+            </p>
             {subscribed ? (
-              <div className="success"><Check /> You&apos;re on the list. See you Friday.</div>
+              <div className="success">
+                <Check /> You&apos;re on the list. See you Friday.
+              </div>
             ) : (
               <form onSubmit={subscribe}>
-                <label className="sr-only" htmlFor="email">Work email</label>
+                <label className="sr-only" htmlFor="email">
+                  Work email
+                </label>
                 <input
                   id="email"
                   type="email"
@@ -251,7 +326,9 @@ function Home() {
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                 />
-                <button type="submit">Join free <ArrowRight size={17} /></button>
+                <button type="submit">
+                  Join free <ArrowRight size={17} />
+                </button>
               </form>
             )}
             <small>No noise. Unsubscribe whenever.</small>
@@ -261,8 +338,13 @@ function Home() {
 
       <footer>
         <div className="footer-brand">
-          <span className="brand-mark">F<span>/</span>N</span>
-          <div><strong>FIELDNOTES</strong><small>Useful knowledge for technical people.</small></div>
+          <span className="brand-mark">
+            F<span>/</span>N
+          </span>
+          <div>
+            <strong>FIELDNOTES</strong>
+            <small>Useful knowledge for technical people.</small>
+          </div>
         </div>
         <div className="footer-links">
           <a href="#guides">Guides</a>
@@ -276,8 +358,20 @@ function Home() {
   );
 }
 
-export function App() {
-  return window.location.pathname === "/guides/sanity-content-not-updating-nextjs"
-    ? <SanityUpdatingArticle />
-    : <Home />;
+export function App({
+  pathname,
+  article,
+}: {
+  pathname?: string;
+  article?: TechArticle | null;
+}) {
+  const currentPath =
+    pathname ??
+    (typeof window === "undefined" ? "/" : window.location.pathname);
+  return currentPath === "/guides/sanity-content-not-updating-nextjs" &&
+    article ? (
+    <SanityUpdatingArticle article={article} />
+  ) : (
+    <Home />
+  );
 }

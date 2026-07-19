@@ -7,10 +7,12 @@
     "dev": "sanity dev --host 0.0.0.0 --port 3333",
     "build": "sanity build",
     "lint": "tsc --noEmit",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "publish:tech-article": "node scripts/publish-tech-sanity-updating-article.mjs"
   },
   "dependencies": {
     "@guiding-light/schemas": "workspace:*",
+    "@sanity/client": "^6.29.1",
     "@sanity/vision": "^3.57.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

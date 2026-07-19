@@ -15,7 +15,7 @@
 .article-toc a { color: #55524d; font: 400 11px var(--mono); line-height: 1.45; }
 .article-toc a:hover { color: var(--blue); }
 .article-content { min-width: 0; }
-.article-content .lead { margin-top: 0; font-size: 24px; line-height: 1.55; letter-spacing: -.025em; }
+.article-content .lead, .article-content > p:first-child { margin-top: 0; font-size: 24px; line-height: 1.55; letter-spacing: -.025em; }
 .article-content p, .article-content li { color: #44413d; font-size: 16px; line-height: 1.8; }
 .article-content section { scroll-margin-top: 110px; margin-top: 88px; }
 .article-content section:first-of-type { margin-top: 78px; }
@@ -74,9 +74,10 @@
   .article-hero h1 { margin-top: 48px; }
   .article-meta { flex-direction: column; gap: 10px; }
   .article-layout { padding-top: 60px; }
-  .article-content .lead { font-size: 20px; }
+  .article-content .lead, .article-content > p:first-child { font-size: 20px; }
   .article-content p, .article-content li { font-size: 15px; }
   .article-end-nav { flex-direction: column; align-items: start; }
   .article-footer { align-items: start; flex-direction: column; }
   .article-footer a { margin-left: 0; }
 }
+
