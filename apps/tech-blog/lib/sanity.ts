@@ -1,5 +1,5 @@
 import { createClient } from "@sanity/client";
-import type { TechArticle } from "../src/tech-article";
+import type { TechArticle, TechArticleSummary } from "../src/tech-article";
 
 const projectId =
   process.env.SANITY_PROJECT_ID ??
@@ -51,5 +51,22 @@ export async function getTechArticleSlugs(): Promise<string[]> {
     `*[_type == "techArticle" && defined(slug.current)].slug.current`,
     {},
     { next: { revalidate: 60, tags: ["techArticles"] } },
+  );
+}
+
+export async function getGuideArticles(): Promise<TechArticleSummary[]> {
+  return getClient().fetch<TechArticleSummary[]>(
+    `*[
+      _type == "techArticle" &&
+      defined(slug.current) &&
+      "guides" in taxonomies[]->slug.current
+    ] | order(coalesce(publishedAt, _createdAt) desc) {
+      _id,title,"slug":slug.current,description,publishedAt,updatedAt,readTime,
+      "taxonomies":taxonomies[]->title,
+      "coverImageUrl":coalesce(coverImage.asset->url, "/articles/sanity-content-not-updating/cover.png"),
+      "coverImageAlt":coalesce(coverImage.alt, "")
+    }`,
+    {},
+    { next: { revalidate: 60, tags: ["techArticles", "techGuides"] } },
   );
 }

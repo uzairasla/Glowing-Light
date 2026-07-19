@@ -62,6 +62,7 @@ const article = {
     { _key: "sanity", _type: "reference", _ref: "tech-taxonomy-sanity" },
     { _key: "nextjs", _type: "reference", _ref: "tech-taxonomy-nextjs" },
     { _key: "debugging", _type: "reference", _ref: "tech-taxonomy-debugging" },
+    { _key: "guides", _type: "reference", _ref: "tech-taxonomy-guides" },
   ],
   seoTitle: "Sanity Content Not Updating in Next.js: A Debugging Guide",
   seoDescription:
@@ -228,6 +229,12 @@ const documents = [
     _type: "techTaxonomy",
     title: "Debugging",
     slug: { _type: "slug", current: "debugging" },
+  },
+  {
+    _id: "tech-taxonomy-guides",
+    _type: "techTaxonomy",
+    title: "Guides",
+    slug: { _type: "slug", current: "guides" },
   },
   article,
 ];

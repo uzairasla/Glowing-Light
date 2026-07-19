@@ -6,7 +6,7 @@ export const AUTHOR = {
   url: `${SITE_URL}/author`,
   jobTitle: "Software Engineer",
   description:
-    "Uzair is a software engineer with more than five years of experience building and evolving production systems with modern web technologies.",
+    "Uzair is a software engineer with more than seven years of experience building and evolving production systems with modern web technologies.",
 };
 
 export function absoluteUrl(path: string) {

@@ -59,8 +59,7 @@ function ArticleHeader() {
         <span>DEV FIELDNOTES</span>
       </a>
       <nav className={open ? "nav open" : "nav"} aria-label="Main navigation">
-        <a href="/#guides">Guides</a>
-        <a href="/#about">About</a>
+        <a href="/guides">Guides</a>
         <a href="/author">Author</a>
       </nav>
       <button
@@ -258,7 +257,7 @@ export function SanityUpdatingArticle({ article }: { article: TechArticle }) {
               </section>
             )}
             <nav className="article-end-nav" aria-label="Article navigation">
-              <a href="/">
+              <a href="/guides">
                 <ArrowLeft size={17} /> Back to all guides
               </a>
               <a href="/">

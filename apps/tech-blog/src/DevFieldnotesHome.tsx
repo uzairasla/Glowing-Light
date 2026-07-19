@@ -23,8 +23,7 @@ export function DevFieldnotesHome() {
           <span>DEV FIELDNOTES</span>
         </a>
         <nav className={menuOpen ? "nav open" : "nav"} aria-label="Main navigation">
-          <a href="#guides" onClick={() => setMenuOpen(false)}>Guides</a>
-          <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+          <a href="/guides" onClick={() => setMenuOpen(false)}>Guides</a>
           <a href="/author" onClick={() => setMenuOpen(false)}>Author</a>
         </nav>
         <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle menu">
@@ -70,7 +69,7 @@ export function DevFieldnotesHome() {
           </div>
         </section>
 
-        <section className="manifesto" id="about">
+        <section className="manifesto">
           <span className="section-index">02 / WHY DEV FIELDNOTES</span>
           <div className="manifesto-copy">
             <h2>Reproduce the problem.<br />Document the fix.</h2>
@@ -89,7 +88,7 @@ export function DevFieldnotesHome() {
           <span className="brand-mark">D<span>/</span>F</span>
           <div><strong>DEV FIELDNOTES</strong><small>Tested solutions for modern web development.</small></div>
         </div>
-        <div className="footer-links"><a href="#guides">Guides</a><a href="#about">About</a><a href="/author">Author</a></div>
+        <div className="footer-links"><a href="/guides">Guides</a><a href="/author">Author</a></div>
         <span className="copyright">{"\u00A9"} 2026 Dev Fieldnotes</span>
       </footer>
     </div>

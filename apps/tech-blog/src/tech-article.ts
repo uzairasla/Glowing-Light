@@ -46,3 +46,17 @@ export type TechArticle = {
   seoTitle?: string;
   seoDescription?: string;
 };
+
+export type TechArticleSummary = Pick<
+  TechArticle,
+  | "_id"
+  | "title"
+  | "slug"
+  | "description"
+  | "publishedAt"
+  | "updatedAt"
+  | "readTime"
+  | "taxonomies"
+  | "coverImageUrl"
+  | "coverImageAlt"
+>;

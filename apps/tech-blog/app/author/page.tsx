@@ -6,12 +6,12 @@ import "./author.css";
 export const metadata: Metadata = {
   title: "Uzair — Software Engineer",
   description:
-    "Meet Uzair, the software engineer behind Dev Fieldnotes, with more than five years of experience building production web systems.",
+    "Meet Uzair, the software engineer behind Dev Fieldnotes, with more than seven years of experience building production web systems.",
   alternates: { canonical: "/author" },
   openGraph: {
     title: "Uzair — Software Engineer",
     description:
-      "The software engineer behind Dev Fieldnotes, with more than five years of experience building production web systems.",
+      "The software engineer behind Dev Fieldnotes, with more than seven years of experience building production web systems.",
     url: "/author",
     siteName: SITE_NAME,
     type: "profile",
@@ -67,7 +67,7 @@ export default function AuthorPage() {
           <span>DEV FIELDNOTES</span>
         </a>
         <nav className="nav" aria-label="Main navigation">
-          <a href="/#guides">Guides</a>
+          <a href="/guides">Guides</a>
           <a href="/author" aria-current="page">Author</a>
         </nav>
       </header>
@@ -78,7 +78,7 @@ export default function AuthorPage() {
           <h1>Uzair</h1>
           <p>
             I&apos;ve worked in the technology industry as a software engineer
-            for more than five years, consistently using new technologies to
+            for more than seven years, consistently using new technologies to
             develop practical, production-ready systems.
           </p>
         </section>
