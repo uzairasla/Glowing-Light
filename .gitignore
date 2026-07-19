@@ -10,4 +10,6 @@ dist
 .env.*.local
 *.tsbuildinfo
 coverage
+*.log
+*.tmp
 apps/studio/.sanity

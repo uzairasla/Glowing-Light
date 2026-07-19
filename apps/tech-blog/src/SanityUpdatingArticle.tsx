@@ -138,6 +138,53 @@ function BodyItem({ item }: { item: TechBodyItem }) {
   return <p>{children}</p>;
 }
 
+function BodyItems({ items }: { items: TechBodyItem[] }) {
+  const rendered: React.ReactNode[] = [];
+  for (let index = 0; index < items.length;) {
+    const item = items[index];
+    if (item._type === "block" && item.listItem) {
+      const listType = item.listItem;
+      const listItems: PortableTextBlock[] = [];
+      while (index < items.length) {
+        const candidate = items[index];
+        if (candidate._type !== "block" || candidate.listItem !== listType)
+          break;
+        listItems.push(candidate);
+        index += 1;
+      }
+      const children = listItems.map((listItem) => (
+        <li key={listItem._key}>
+          {listItem.children.map((span) => spanContent(span, listItem))}
+        </li>
+      ));
+      rendered.push(
+        listType === "number" ? (
+          <ol key={item._key}>{children}</ol>
+        ) : (
+          <ul key={item._key}>{children}</ul>
+        ),
+      );
+      continue;
+    }
+    rendered.push(<BodyItem key={item._key} item={item} />);
+    index += 1;
+  }
+  return rendered;
+}
+
+function CopyArticleLink() {
+  const [copied, setCopied] = useState(false);
+  async function copy() {
+    await navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1800);
+  }
+  return (
+    <button onClick={copy}>
+      {copied ? "Link copied" : "Copy article link"}
+    </button>
+  );
+}
 function formatDate(value?: string) {
   if (!value) return "";
   return new Intl.DateTimeFormat("en-US", {
@@ -172,7 +219,7 @@ export function SanityUpdatingArticle({ article }: { article: TechArticle }) {
             <span>
               <Clock3 size={15} /> {article.readTime || "18 min"} read
             </span>
-            <span>{article.taxonomies?.join(" � ")}</span>
+            <span>{article.taxonomies?.join(" \u00B7 ")}</span>
           </div>
         </header>
         {article.coverImageUrl && (
@@ -193,9 +240,7 @@ export function SanityUpdatingArticle({ article }: { article: TechArticle }) {
             ))}
           </aside>
           <article className="article-content">
-            {article.body.map((item) => (
-              <BodyItem key={item._key} item={item} />
-            ))}
+            <BodyItems items={article.body} />
             {!!article.sourceUrls?.length && (
               <section className="sources">
                 <div className="section-label">Sources & further reading</div>
@@ -226,7 +271,7 @@ export function SanityUpdatingArticle({ article }: { article: TechArticle }) {
       <footer className="article-footer">
         <span>FIELDNOTES</span>
         <small>Practical guides for technical work.</small>
-        <a href={articlePath}>Copy article link</a>
+        <CopyArticleLink />
       </footer>
     </div>
   );

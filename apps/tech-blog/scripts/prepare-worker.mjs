@@ -29,7 +29,7 @@ function documentHtml(app, article) {
   const title = article?.seoTitle || article?.title || "Fieldnotes - Practical guides for technical work";
   const description = article?.seoDescription || article?.description || "Field-tested technical guides and ready-to-use templates for people who build.";
   const serialized = JSON.stringify(article).replace(/</g, "\\\\u003c");
-  return \`<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#11110f"><title>\${escapeHtml(title)}</title><meta name="description" content="\${escapeHtml(description)}">${cssLinks}<script type="module" src="/${clientEntry.file}"></script></head><body><div id="root">\${app}</div><script>window.__TECH_ARTICLE__=\${serialized}</script></body></html>\`;
+  return \`<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#11110f"><title>\${escapeHtml(title)}</title><meta name="description" content="\${escapeHtml(description)}"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">${cssLinks}<script type="module" src="/${clientEntry.file}"></script></head><body><div id="root">\${app}</div><script>window.__TECH_ARTICLE__=\${serialized}</script></body></html>\`;
 }
 async function getArticle(env) {
   const projectId = env.SANITY_PROJECT_ID || env.NEXT_PUBLIC_SANITY_PROJECT_ID;

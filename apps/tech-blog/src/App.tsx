@@ -29,7 +29,7 @@ const latest = [
   {
     number: "01",
     category: "Sanity",
-    title: "Sanity content isn�t updating in Next.js",
+    title: "Sanity content isn\u2019t updating in Next.js",
     description:
       "Trace stale content across drafts, perspectives, the Sanity CDN, Next.js caches, and revalidation without guessing.",
     time: "18 min",
@@ -352,7 +352,7 @@ function Home() {
           <a href="#about">About</a>
           <a href="mailto:hello@fieldnotes.tools">Contact</a>
         </div>
-        <span className="copyright">© 2026 Fieldnotes</span>
+        <span className="copyright">{"\u00A9"} 2026 Fieldnotes</span>
       </footer>
     </div>
   );
