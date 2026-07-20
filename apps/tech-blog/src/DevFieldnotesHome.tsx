@@ -55,14 +55,14 @@ export function DevFieldnotesHome() {
           </div>
           <div className="article-grid">
             <article className="article-card lime">
-              <div className="article-visual">
+              <a className="article-visual" href={guide.href} aria-label={`Read ${guide.title}`}>
                 <span className="article-number">01</span>
                 <div className="diagram"><span /><span /><span /></div>
                 <span className="article-category">{guide.category}</span>
-              </div>
+              </a>
               <div className="article-body">
                 <div className="reading-time"><Clock3 size={14} /> {guide.time} read</div>
-                <h3>{guide.title}</h3><p>{guide.description}</p>
+                <h3><a href={guide.href}>{guide.title}</a></h3><p>{guide.description}</p>
                 <a href={guide.href}>Read the field guide <ChevronRight size={16} /></a>
               </div>
             </article>

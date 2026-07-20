@@ -86,14 +86,18 @@ export default async function GuidesPage() {
               <span className="guide-index">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <div className="guide-cover">
+              <a
+                className="guide-cover"
+                href={`/guides/${guide.slug}`}
+                aria-label={`Read ${guide.title}`}
+              >
                 {guide.coverImageUrl && (
                   <img
                     src={absoluteUrl(guide.coverImageUrl)}
                     alt={guide.coverImageAlt || ""}
                   />
                 )}
-              </div>
+              </a>
               <div className="guide-copy">
                 <div className="guide-meta">
                   <span>{guide.taxonomies?.join(" · ")}</span>
