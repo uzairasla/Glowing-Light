@@ -58,21 +58,23 @@ export default async function JourneyDetailPage({ params }: Props) {
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             </Button>
-            <Button asChild variant="secondary">
-              <Link href="/onboarding">Save this journey</Link>
-            </Button>
           </div>
         </section>
         <aside className="rounded-2xl border bg-white p-5 shadow-soft">
           <p className="text-sm font-bold text-muted-foreground">Path length</p>
-          <p className="mt-2 font-serif text-4xl font-bold">{journey.lessons.length}</p>
+          <p className="mt-2 font-serif text-4xl font-bold">
+            {journey.lessons.length}
+          </p>
           <p className="text-sm text-muted-foreground">structured lessons</p>
         </aside>
       </div>
 
       <section className="mt-12 grid gap-4">
         {journey.lessons.map((lesson, index) => (
-          <Card key={lesson.id} className="grid gap-4 p-5 md:grid-cols-[auto_1fr_auto] md:items-center">
+          <Card
+            key={lesson.id}
+            className="grid gap-4 p-5 md:grid-cols-[auto_1fr_auto] md:items-center"
+          >
             <span className="grid size-11 place-items-center rounded-2xl bg-teal-50 font-bold text-teal-900">
               {index + 1}
             </span>
@@ -85,7 +87,9 @@ export default async function JourneyDetailPage({ params }: Props) {
                   {lesson.title}
                 </Link>
               </h2>
-              <p className="mt-1 leading-7 text-muted-foreground">{lesson.summary}</p>
+              <p className="mt-1 leading-7 text-muted-foreground">
+                {lesson.summary}
+              </p>
             </div>
             <div className="flex items-center gap-3">
               <span className="inline-flex items-center gap-1 text-sm font-semibold text-muted-foreground">

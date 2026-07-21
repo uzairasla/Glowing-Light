@@ -4,7 +4,8 @@ import { Card } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Guiding Light is a journey-first faith guidance platform built around clarity, compassion, privacy, and reviewed sources.",
+  description:
+    "Learn how Glowing Light approaches Islamic learning with clarity, compassion, and care for trustworthy sources.",
   alternates: { canonical: "/about" },
 };
 
@@ -14,14 +15,27 @@ export default function AboutPage() {
       <SectionHeading
         kicker="About"
         title="A calmer way to explore serious questions."
-        description="Guiding Light is not a generic utility app. It is organized around the journey a person is actually on."
+        description="Glowing Light organizes Islamic learning around the questions and life stage a person is actually experiencing."
       />
       <div className="mt-10 grid gap-5 md:grid-cols-3">
-        {["Clarity", "Compassion", "Trust"].map((item) => (
+        {[
+          [
+            "Clarity",
+            "Complex ideas are presented in plain language and arranged in a sequence that is easy to follow.",
+          ],
+          [
+            "Compassion",
+            "People can learn at their own pace, ask honest questions, and begin from wherever they are.",
+          ],
+          [
+            "Trust",
+            "Religious claims should be supported by clearly identified sources and reviewed before publication.",
+          ],
+        ].map(([item, description]) => (
           <Card key={item} className="p-6">
             <h2 className="text-xl font-bold">{item}</h2>
             <p className="mt-3 leading-7 text-muted-foreground">
-              Placeholder copy for the product principle. Replace with reviewed brand and editorial language.
+              {description}
             </p>
           </Card>
         ))}

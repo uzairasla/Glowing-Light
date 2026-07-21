@@ -5,7 +5,8 @@ import { getJourneys } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Learning Journeys",
-  description: "Choose a guided path for questioning religion, exploring Islam, or beginning as a new Muslim.",
+  description:
+    "Choose a guided path for questioning religion, exploring Islam, or beginning as a new Muslim.",
   alternates: { canonical: "/journeys" },
 };
 
@@ -17,7 +18,7 @@ export default async function JourneysPage() {
       <SectionHeading
         kicker="Start where you are"
         title="Guided journeys"
-        description="Each path is predefined for editorial review and can later be managed in Sanity."
+        description="Choose a path that matches where you are, then explore each topic in a clear, intentional order."
       />
       <div className="mt-10 grid gap-5 lg:grid-cols-3">
         {journeys.map((journey, index) => (

@@ -8,8 +8,8 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
   title: {
-    default: "Guiding Light",
-    template: "%s | Guiding Light",
+    default: "Glowing Light",
+    template: "%s | Glowing Light",
   },
   description:
     "A calm, source-backed learning platform for people questioning religion, exploring Islam, and beginning life as new Muslims.",
@@ -17,16 +17,27 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Guiding Light",
+    title: "Glowing Light",
     description:
       "Private questions, reviewed answers, and guided learning journeys for sincere seekers.",
     url: "/",
-    siteName: "Guiding Light",
+    siteName: "Glowing Light",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Glowing Light",
+    description:
+      "Trusted learning paths and thoughtful guidance for exploring Islam.",
+  },
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
@@ -35,16 +46,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <footer className="border-t bg-white/70 py-8 text-center text-sm text-muted-foreground">
             <div className="container flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
-              <p>Guiding Light uses reviewed sources and clear editorial status.</p>
+              <p>Glowing Light offers calm, structured learning about Islam.</p>
               <div className="flex gap-5">
-                <Link href="/questions" className="hover:text-primary">
-                  Questions
+                <Link href="/journeys" className="hover:text-primary">
+                  Learning journeys
                 </Link>
-                <Link href="/ask" className="hover:text-primary">
-                  Ask
-                </Link>
-                <Link href="/settings" className="hover:text-primary">
-                  Settings
+                <Link href="/about" className="hover:text-primary">
+                  About
                 </Link>
               </div>
             </div>

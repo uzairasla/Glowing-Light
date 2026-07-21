@@ -4,7 +4,8 @@ import { getJourneys } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "New Muslim Guide",
-  description: "A gentle step-by-step guide for new Muslims learning Shahadah, wudu, prayer, Quran basics, mosque etiquette, and sustainable habits.",
+  description:
+    "A gentle step-by-step guide for new Muslims learning Shahadah, wudu, prayer, Quran basics, mosque etiquette, and sustainable habits.",
   alternates: { canonical: "/guides/new-muslim" },
 };
 
@@ -18,9 +19,12 @@ export default async function NewMuslimGuidePage() {
         <p className="text-sm font-extrabold uppercase tracking-[0.1em] text-gold">
           Gentle first steps
         </p>
-        <h1 className="mt-3 font-serif text-5xl font-bold md:text-7xl">New Muslim guide</h1>
+        <h1 className="mt-3 font-serif text-5xl font-bold md:text-7xl">
+          New Muslim guide
+        </h1>
         <p className="mt-5 text-lg leading-8 text-muted-foreground">
-          Start with what matters most and build gradually. This page will become a focused guide for practical first steps.
+          Start with what matters most and build gradually through practical
+          first steps, worship, community, and sustainable habits.
         </p>
       </div>
       <div className="mt-10 max-w-xl">
