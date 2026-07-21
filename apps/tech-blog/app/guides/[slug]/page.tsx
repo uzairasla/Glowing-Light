@@ -82,6 +82,12 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 {
                   "@type": "ListItem",
                   position: 2,
+                  name: "Guides",
+                  item: `${SITE_URL}/guides`,
+                },
+                {
+                  "@type": "ListItem",
+                  position: 3,
                   name: article.seoTitle ?? article.title,
                   item: articleUrl,
                 },

@@ -18,7 +18,7 @@ export const techArticleQuery = `*[_type == "techArticle" && slug.current == $sl
   _id,title,"slug":slug.current,description,publishedAt,updatedAt,readTime,kicker,body,
   "taxonomies":taxonomies[]->title,sourceUrls,
   "coverImageUrl":coalesce(coverImage.asset->url, "/articles/sanity-content-not-updating/cover.png"),
-  "coverImageAlt":coalesce(coverImage.alt, "A diagnostic content pipeline showing an update blocked at a cache layer between a CMS and website"),
+  "coverImageAlt":select(defined(coverImage.alt) && coverImage.alt != "" => coverImage.alt, "A diagnostic content pipeline showing an update blocked at a cache layer between a CMS and website"),
   seoTitle,seoDescription
 }`;
 
@@ -64,7 +64,7 @@ export async function getGuideArticles(): Promise<TechArticleSummary[]> {
       _id,title,"slug":slug.current,description,publishedAt,updatedAt,readTime,
       "taxonomies":taxonomies[]->title,
       "coverImageUrl":coalesce(coverImage.asset->url, "/articles/sanity-content-not-updating/cover.png"),
-      "coverImageAlt":coalesce(coverImage.alt, "")
+      "coverImageAlt":select(defined(coverImage.alt) && coverImage.alt != "" => coverImage.alt, "A diagnostic content pipeline showing an update blocked at a cache layer between a CMS and website")
     }`,
     {},
     { next: { revalidate: 60, tags: ["techArticles", "techGuides"] } },

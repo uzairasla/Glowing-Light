@@ -8,7 +8,8 @@
     "build": "sanity build",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "publish:tech-article": "node scripts/publish-tech-sanity-updating-article.mjs"
+    "publish:tech-article": "node scripts/publish-tech-sanity-updating-article.mjs",
+    "publish:tech-draft-mode-article": "node scripts/publish-tech-sanity-draft-mode-article.mjs"
   },
   "dependencies": {
     "@guiding-light/schemas": "workspace:*",
