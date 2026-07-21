@@ -2,18 +2,12 @@
 
 import { ArrowRight, Check, ChevronRight, Clock3, Menu, X } from "lucide-react";
 import { useState } from "react";
+import type { TechArticleSummary } from "./tech-article";
 
-const guide = {
-  category: "Sanity",
-  title: "Sanity content isn\u2019t updating in Next.js",
-  description:
-    "Trace stale content across drafts, perspectives, the Sanity CDN, Next.js caches, and revalidation without guessing.",
-  time: "18 min",
-  href: "/guides/sanity-content-not-updating-nextjs",
-};
-
-export function DevFieldnotesHome() {
+export function DevFieldnotesHome({ guides }: { guides: TechArticleSummary[] }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const latestGuide = guides[0];
+  const latestGuideHref = latestGuide ? `/guides/${latestGuide.slug}` : "/guides";
 
   return (
     <div className="site-shell">
@@ -38,7 +32,7 @@ export function DevFieldnotesHome() {
           <h1>Technical problems,<br /><em>made practical.</em></h1>
           <div className="hero-lower">
             <p>Detailed field guides for debugging Next.js, Sanity, deployment, caching, and the systems around them.</p>
-            <a className="primary-button" href={guide.href}>Read the first guide <ArrowRight size={18} /></a>
+            <a className="primary-button" href={latestGuideHref}>Read the latest guide <ArrowRight size={18} /></a>
           </div>
           <div className="hero-aside" aria-hidden="true">
             <span>REPRODUCE</span><span>TRACE</span><span>FIX</span><span>VERIFY</span>
@@ -51,21 +45,27 @@ export function DevFieldnotesHome() {
 
         <section className="content-section" id="guides">
           <div className="section-heading">
-            <div><span className="section-index">01 / LATEST GUIDE</span><h2>Start with the actual failure.</h2></div>
+            <div><span className="section-index">01 / LATEST GUIDES</span><h2>Start with the actual failure.</h2></div>
           </div>
           <div className="article-grid">
-            <article className="article-card lime">
-              <a className="article-visual" href={guide.href} aria-label={`Read ${guide.title}`}>
-                <span className="article-number">01</span>
-                <div className="diagram"><span /><span /><span /></div>
-                <span className="article-category">{guide.category}</span>
-              </a>
-              <div className="article-body">
-                <div className="reading-time"><Clock3 size={14} /> {guide.time} read</div>
-                <h3><a href={guide.href}>{guide.title}</a></h3><p>{guide.description}</p>
-                <a href={guide.href}>Read the field guide <ChevronRight size={16} /></a>
-              </div>
-            </article>
+            {guides.map((guide, index) => {
+              const guideHref = `/guides/${guide.slug}`;
+
+              return (
+                <article className={`article-card ${index % 2 === 0 ? "lime" : "blue"}`} key={guide.slug}>
+                  <a className="article-visual" href={guideHref} aria-label={`Read ${guide.title}`}>
+                    {guide.coverImageUrl && <img src={guide.coverImageUrl} alt={guide.coverImageAlt || ""} />}
+                    <span className="article-number">{index === 0 ? "NEW" : String(index + 1).padStart(2, "0")}</span>
+                    <span className="article-category">{guide.taxonomies?.filter((taxonomy) => taxonomy !== "Guides").slice(0, 2).join(" · ")}</span>
+                  </a>
+                  <div className="article-body">
+                    <div className="reading-time"><Clock3 size={14} /> {guide.readTime || "Guide"} read</div>
+                    <h3><a href={guideHref}>{guide.title}</a></h3><p>{guide.description}</p>
+                    <a href={guideHref}>Read the field guide <ChevronRight size={16} /></a>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </section>
 

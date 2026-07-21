@@ -19,6 +19,12 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     type: "website",
     images: ["/og.png"],
+  },  twitter: {
+    card: "summary_large_image",
+    title: "Guides | Dev Fieldnotes",
+    description:
+      "Tested field guides for modern web development and production debugging.",
+    images: ["/og.png"],
   },
 };
 

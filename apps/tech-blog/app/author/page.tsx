@@ -16,6 +16,12 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     type: "profile",
     images: ["/og.png"],
+  },  twitter: {
+    card: "summary_large_image",
+    title: "Uzair — Software Engineer",
+    description:
+      "The software engineer behind Dev Fieldnotes, with more than seven years of experience building production web systems.",
+    images: ["/og.png"],
   },
 };
 

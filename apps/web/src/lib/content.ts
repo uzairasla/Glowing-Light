@@ -127,6 +127,23 @@ const articleBySlugQuery = `*[_type == "article" && slug.current == $slug][0] {
   }
 }`;
 
+const publishedLessonSlugsQuery =
+  '*[_type == "article" && defined(slug.current) && count(body) > 0] | order(_updatedAt desc) {"slug": slug.current, "lastModified": _updatedAt}';
+
+export async function getPublishedLessonSitemapEntries(): Promise<
+  Array<{ slug: string; lastModified: string }>
+> {
+  try {
+    return (
+      (await sanityFetch<Array<{ slug: string; lastModified: string }>>(
+        publishedLessonSlugsQuery,
+      )) ?? []
+    );
+  } catch {
+    return [];
+  }
+}
+
 export async function getJourneys(): Promise<JourneyDefinition[]> {
   try {
     const sanityTaxonomies = await sanityFetch<SanityTaxonomy[]>(taxonomyQuery);
@@ -138,7 +155,9 @@ export async function getJourneys(): Promise<JourneyDefinition[]> {
   }
 }
 
-export async function getJourneyBySlug(slug: string): Promise<JourneyDefinition | undefined> {
+export async function getJourneyBySlug(
+  slug: string,
+): Promise<JourneyDefinition | undefined> {
   const allJourneys = await getJourneys();
   return allJourneys.find((journey) => journey.slug === slug);
 }
@@ -147,7 +166,9 @@ export async function getPublicQuestions(): Promise<PublicQuestion[]> {
   return publicQuestions;
 }
 
-export async function getPublicQuestionBySlug(slug: string): Promise<PublicQuestion | undefined> {
+export async function getPublicQuestionBySlug(
+  slug: string,
+): Promise<PublicQuestion | undefined> {
   return publicQuestions.find((question) => question.slug === slug);
 }
 
@@ -164,9 +185,14 @@ export async function getLessons(): Promise<LessonWithJourney[]> {
   );
 }
 
-export async function getLessonBySlug(slug: string): Promise<LessonWithJourney | undefined> {
+export async function getLessonBySlug(
+  slug: string,
+): Promise<LessonWithJourney | undefined> {
   try {
-    const sanityArticle = await sanityFetch<SanityArticleDetail>(articleBySlugQuery, { slug });
+    const sanityArticle = await sanityFetch<SanityArticleDetail>(
+      articleBySlugQuery,
+      { slug },
+    );
     const mapped = sanityArticle ? mapSanityArticleDetail(sanityArticle) : null;
 
     if (mapped) {
@@ -185,7 +211,9 @@ function mapSanityTaxonomy(taxonomy: SanityTaxonomy): JourneyDefinition | null {
     return null;
   }
 
-  const staticJourney = journeys.find((journey) => journey.slug === taxonomy.slug);
+  const staticJourney = journeys.find(
+    (journey) => journey.slug === taxonomy.slug,
+  );
   const articles = uniqueArticlesById([
     ...(taxonomy.articles ?? []),
     ...(taxonomy.children ?? []).flatMap((child) => child.articles ?? []),
@@ -196,7 +224,8 @@ function mapSanityTaxonomy(taxonomy: SanityTaxonomy): JourneyDefinition | null {
     slug: taxonomy.slug,
     title: taxonomy.title,
     eyebrow: staticJourney?.eyebrow ?? "Guided path",
-    description: taxonomy.description ?? "A guided collection of related articles.",
+    description:
+      taxonomy.description ?? "A guided collection of related articles.",
     promise: taxonomy.description ?? "Move through this topic step by step.",
     lessons: articles.map(mapSanityArticle).filter(isPresent),
   };
@@ -217,10 +246,15 @@ function mapSanityArticle(article: SanityArticle): LessonSummary | null {
   };
 }
 
-function mapSanityArticleDetail(article: SanityArticleDetail): LessonWithJourney | null {
+function mapSanityArticleDetail(
+  article: SanityArticleDetail,
+): LessonWithJourney | null {
   const mappedArticle = mapSanityArticle(article);
   const taxonomy = article.taxonomies?.find((item) => item.title && item.slug);
-  const journeyTaxonomy = taxonomy?.parent?.title && taxonomy.parent.slug ? taxonomy.parent : taxonomy;
+  const journeyTaxonomy =
+    taxonomy?.parent?.title && taxonomy.parent.slug
+      ? taxonomy.parent
+      : taxonomy;
 
   if (!mappedArticle || !journeyTaxonomy?.title || !journeyTaxonomy.slug) {
     return null;
