@@ -1,14 +1,17 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  NEXT_PUBLIC_SITE_URL: z.string().url().default("http://localhost:3000"),
+  NEXT_PUBLIC_SITE_URL: z.string().url().default("https://theglowinglight.com"),
   NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().optional(),
   NEXT_PUBLIC_SANITY_DATASET: z.string().default("production"),
   NEXT_PUBLIC_SANITY_API_VERSION: z.string().default("2026-07-04"),
   NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().optional(),
   NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
-  NEXT_PUBLIC_POSTHOG_HOST: z.string().url().default("https://us.i.posthog.com"),
+  NEXT_PUBLIC_POSTHOG_HOST: z
+    .string()
+    .url()
+    .default("https://us.i.posthog.com"),
 });
 
 export const env = envSchema.parse({

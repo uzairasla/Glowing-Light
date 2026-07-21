@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Bookmark, CheckCircle2 } from "lucide-react";
 import { RichText } from "@/components/rich-text";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getLessonBySlug, getLessons } from "@/lib/content";
 
@@ -38,7 +36,7 @@ export default async function LessonPage({ params }: Props) {
   const { slug } = await params;
   const lesson = await getLessonBySlug(slug);
 
-  if (!lesson) {
+  if (!lesson?.body?.length) {
     notFound();
   }
 
@@ -57,41 +55,8 @@ export default async function LessonPage({ params }: Props) {
         <p className="mt-5 text-lg leading-8 text-muted-foreground">
           {lesson.summary}
         </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Button>
-            <CheckCircle2 className="size-4" aria-hidden="true" />
-            Mark started
-          </Button>
-          <Button variant="secondary">
-            <Bookmark className="size-4" aria-hidden="true" />
-            Save
-          </Button>
-        </div>
-
         <Card className="mt-10 p-7">
-          {lesson.body && lesson.body.length > 0 ? (
-            <RichText value={lesson.body} />
-          ) : (
-            <div className="prose prose-slate max-w-none prose-headings:font-serif prose-headings:text-foreground prose-p:text-muted-foreground">
-              <h2>Overview</h2>
-              <p>
-                This is placeholder lesson content for product development. In
-                production, this lesson should be authored in Sanity, reviewed,
-                sourced, and connected to the approved journey structure.
-              </p>
-              <h2>What you will learn</h2>
-              <ul>
-                <li>The core question this lesson is trying to answer.</li>
-                <li>Important terms and ideas explained in plain language.</li>
-                <li>Where to go next in the guided path.</li>
-              </ul>
-              <h2>Reflection</h2>
-              <p>
-                What part of this topic feels clearest, and what part would you
-                want to ask about privately?
-              </p>
-            </div>
-          )}
+          <RichText value={lesson.body} />
         </Card>
       </article>
     </main>

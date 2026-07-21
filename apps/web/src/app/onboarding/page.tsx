@@ -3,7 +3,8 @@ import { OnboardingSelector } from "@/components/onboarding-selector";
 
 export const metadata: Metadata = {
   title: "Onboarding",
-  description: "Choose your starting point and begin a guided learning journey.",
+  description:
+    "Choose your starting point and begin a guided learning journey.",
   alternates: { canonical: "/onboarding" },
 };
 
@@ -19,8 +20,8 @@ export default function OnboardingPage() {
             Where are you beginning?
           </h1>
           <p className="mt-5 text-lg leading-8 text-muted-foreground">
-            You can explore without creating an account. Anonymous progress is stored
-            locally until you choose to save or sync.
+            No account is required. Choose a starting point and begin exploring
+            immediately.
           </p>
         </section>
         <OnboardingSelector />
