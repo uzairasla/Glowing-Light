@@ -90,7 +90,7 @@ button { color: inherit; }
   cursor: pointer; font: 400 10px var(--mono); text-transform: uppercase; letter-spacing: .06em;
 }
 .topic-filter button.active, .topic-filter button:hover { background: var(--ink); color: var(--paper); }
-.article-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--ink); background: var(--ink); gap: 1px; }
+.article-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--ink); background: var(--ink); gap: 1px; }
 .article-card { min-width: 0; background: var(--paper); }
 .article-card + .article-card { border-left: 0; }
 .article-visual { display: block; aspect-ratio: 1.86 / 1; position: relative; padding: 20px; overflow: hidden; background: #ded9ce; border-bottom: 1px solid var(--ink); }
