@@ -22,15 +22,12 @@ export function JourneyCard({ journey, index }: JourneyCardProps) {
     <Card className="group relative overflow-hidden">
       <div className={`h-1.5 ${accents[index] ?? "bg-teal"}`} />
       <CardHeader>
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <Badge variant="teal">{journey.eyebrow}</Badge>
-            <CardTitle className="mt-4 font-serif text-3xl">{journey.title}</CardTitle>
-          </div>
-          <span className="font-serif text-6xl font-bold leading-none text-navy/10">
-            {index + 1}
-          </span>
-        </div>
+        <Badge variant="teal" className="w-fit">
+          {journey.eyebrow}
+        </Badge>
+        <CardTitle className="mt-4 font-serif text-3xl">
+          {journey.title}
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-5">
         <p className="leading-7 text-muted-foreground">{journey.description}</p>

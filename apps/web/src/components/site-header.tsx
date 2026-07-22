@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MoonStar, Menu } from "lucide-react";
+import { Sparkles, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const links = [
@@ -16,7 +16,7 @@ export function SiteHeader() {
           className="inline-flex items-center gap-3 font-extrabold tracking-normal"
         >
           <span className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-teal to-[#075961] text-white shadow-[0_8px_22px_rgba(13,125,131,.25)]">
-            <MoonStar className="size-5" aria-hidden="true" />
+            <Sparkles className="size-5" aria-hidden="true" />
           </span>
           <span>Glowing Light</span>
         </Link>

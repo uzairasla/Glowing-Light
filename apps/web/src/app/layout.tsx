@@ -12,14 +12,14 @@ export const metadata: Metadata = {
     template: "%s | Glowing Light",
   },
   description:
-    "A calm, source-backed learning platform for people questioning religion, exploring Islam, and beginning life as new Muslims.",
+    "A source-backed platform exploring one Abrahamic faith through Judaism, Christianity, and Islam without choosing sides.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Glowing Light",
     description:
-      "Private questions, reviewed answers, and guided learning journeys for sincere seekers.",
+      "Source-backed journeys exploring one Abrahamic faith through Judaism, Christianity, and Islam.",
     url: "/",
     siteName: "Glowing Light",
     type: "website",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Glowing Light",
     description:
-      "Trusted learning paths and thoughtful guidance for exploring Islam.",
+      "Explore one Abrahamic faith through three traditions with clarity, respect, and no chosen side.",
   },
   robots: { index: true, follow: true },
 };
@@ -46,7 +46,10 @@ export default function RootLayout({
           {children}
           <footer className="border-t bg-white/70 py-8 text-center text-sm text-muted-foreground">
             <div className="container flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
-              <p>Glowing Light offers calm, structured learning about Islam.</p>
+              <p>
+                Glowing Light explores one Abrahamic faith through Judaism,
+                Christianity, and Islam.
+              </p>
               <div className="flex gap-5">
                 <Link href="/journeys" className="hover:text-primary">
                   Learning journeys

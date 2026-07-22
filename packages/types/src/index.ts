@@ -1,7 +1,5 @@
 export type JourneyAudience =
-  | "questioning-religion"
-  | "exploring-islam"
-  | "new-muslim";
+  "questioning-religion" | "exploring-islam" | "new-muslim";
 
 export type ReviewStatus =
   | "draft"
@@ -15,18 +13,10 @@ export type LessonDifficulty = "introductory" | "foundational" | "intermediate";
 export type ProgressStatus = "not_started" | "in_progress" | "completed";
 
 export type QuestionSubmissionStatus =
-  | "submitted"
-  | "under_review"
-  | "answered"
-  | "published"
-  | "closed";
+  "submitted" | "under_review" | "answered" | "published" | "closed";
 
 export type BookmarkContentType =
-  | "lesson"
-  | "question"
-  | "article"
-  | "scripture_passage"
-  | "video";
+  "lesson" | "question" | "article" | "scripture_passage" | "video";
 
 export type FeedbackType =
   | "unclear"
@@ -44,6 +34,14 @@ export type LessonSummary = {
   difficulty: LessonDifficulty;
 };
 
+export type JourneySection = {
+  id: string;
+  title: string;
+  description?: string;
+  lessons: LessonSummary[];
+  sections?: JourneySection[];
+};
+
 export type JourneyDefinition = {
   id: string;
   slug: string;
@@ -52,4 +50,5 @@ export type JourneyDefinition = {
   description: string;
   promise: string;
   lessons: LessonSummary[];
+  sections?: JourneySection[];
 };

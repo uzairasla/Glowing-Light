@@ -6,7 +6,6 @@ import {
   Check,
   Compass,
   Heart,
-  MoonStar,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
@@ -17,35 +16,48 @@ import { getJourneys } from "@/lib/content";
 import { env } from "@/lib/env";
 
 export const metadata: Metadata = {
-  title: "Learn Islam. Grow with intention.",
+  title: "Explore One Abrahamic Faith Through Three Traditions",
   description:
-    "Explore Islam through trusted lessons, thoughtful answers, and a personal journey that helps you keep growing in faith.",
+    "Explore one Abrahamic faith through Judaism, Christianity, and Islam, following shared themes without choosing sides.",
   alternates: { canonical: "/" },
 };
 
 const principles = [
   {
     icon: BookOpen,
-    title: "Learn with clarity",
+    title: "Follow one theme",
     description:
-      "Understand belief, worship, and everyday Muslim life through calm, structured lessons.",
+      "Trace each topic through Judaism, Christianity, and Islam as expressions of one Abrahamic inheritance.",
   },
   {
     icon: ShieldCheck,
-    title: "Trust what you read",
+    title: "Observe without taking sides",
     description:
-      "See sources and review status clearly, so you always know how an answer was prepared.",
+      "Let each tradition speak through its own scriptures, history, and teachings with equal care and attention.",
   },
   {
     icon: Heart,
-    title: "Grow without pressure",
+    title: "Discover the unity",
     description:
-      "Move privately, revisit what matters, and build a rhythm that fits where you are today.",
+      "Look beyond labels to understand the shared Abrahamic faith that runs through all three traditions.",
   },
 ];
 
 export default async function HomePage() {
   const journeys = await getJourneys();
+  const questioningJourney = journeys.find(
+    (journey) => journey.slug === "questioning-religion",
+  );
+  const featuredJourneys = [questioningJourney].filter(
+    (journey): journey is NonNullable<typeof journey> => Boolean(journey),
+  );
+  const featuredSlugs = new Set(
+    featuredJourneys.map((journey) => journey.slug),
+  );
+  const homepageJourneys = [
+    ...featuredJourneys,
+    ...journeys.filter((journey) => !featuredSlugs.has(journey.slug)),
+  ].slice(0, 3);
 
   return (
     <main>
@@ -70,18 +82,19 @@ export default async function HomePage() {
         <div className="container relative grid min-h-[720px] items-center gap-14 py-20 lg:grid-cols-[1.08fr_.92fr] lg:py-24">
           <div className="max-w-3xl">
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[.18em] text-amber-100 backdrop-blur">
-              <MoonStar className="size-4 text-gold" />A place for sincere
-              growth
+              <Sparkles className="size-4 text-gold" />A place for shared
+              understanding
             </div>
             <h1 className="font-serif text-5xl font-bold leading-[1.02] text-balance sm:text-6xl lg:text-[5.4rem]">
-              Learn Islam.
+              Three traditions.
               <span className="mt-2 block text-[#e6bd69]">
-                Live it, one step at a time.
+                One Abrahamic faith.
               </span>
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 md:text-xl">
-              Trusted guidance for understanding your faith, building meaningful
-              habits, and seeing how far you have come on your journey.
+              Deep-dive into the same questions through Judaism, Christianity,
+              and Islam. Follow the evidence across all three without choosing a
+              side.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Button
@@ -89,8 +102,8 @@ export default async function HomePage() {
                 size="lg"
                 className="bg-gold text-navy hover:bg-[#e0b24f]"
               >
-                <Link href="/onboarding">
-                  Begin your journey <ArrowRight className="size-4" />
+                <Link href="/journeys">
+                  Explore the journeys <ArrowRight className="size-4" />
                 </Link>
               </Button>
               <Button
@@ -122,7 +135,7 @@ export default async function HomePage() {
               </div>
               <div className="mt-8 rounded-2xl bg-white p-5 text-navy shadow-xl">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="font-bold">Foundations of faith</span>
+                  <span className="font-bold">Shared Abrahamic roots</span>
                   <span className="font-bold text-teal">42%</span>
                 </div>
                 <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
@@ -130,9 +143,9 @@ export default async function HomePage() {
                 </div>
                 <div className="mt-6 space-y-3">
                   {[
-                    [true, "Why we believe"],
-                    [true, "Knowing Allah"],
-                    [false, "The purpose of worship"],
+                    [true, "Abraham and monotheism"],
+                    [true, "Revelation and scripture"],
+                    [false, "Prophets across traditions"],
                   ].map(([done, label]) => (
                     <div
                       key={String(label)}
@@ -159,14 +172,14 @@ export default async function HomePage() {
       <section className="container py-20 md:py-28">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-extrabold uppercase tracking-[.2em] text-teal">
-            Faith, made approachable
+            One faith, observed through three traditions
           </p>
           <h2 className="mt-4 font-serif text-4xl font-bold text-balance md:text-5xl">
-            A thoughtful companion for your deen.
+            Explore the whole Abrahamic tradition.
           </h2>
           <p className="mt-5 text-lg leading-8 text-muted-foreground">
-            Whether you are discovering Islam or deepening a lifelong faith,
-            start from where you are.
+            Study each topic across Judaism, Christianity, and Islam to see the
+            shared faith, revelation, and purpose connecting all three.
           </p>
         </div>
         <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -192,10 +205,10 @@ export default async function HomePage() {
           <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <p className="text-xs font-extrabold uppercase tracking-[.2em] text-teal">
-                Guided journeys
+                Paths to understanding
               </p>
               <h2 className="mt-4 font-serif text-4xl font-bold md:text-5xl">
-                Choose what you want to grow in.
+                Follow each question across all three traditions.
               </h2>
             </div>
             <Link
@@ -206,7 +219,7 @@ export default async function HomePage() {
             </Link>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
-            {journeys.slice(0, 3).map((journey, index) => (
+            {homepageJourneys.map((journey, index) => (
               <JourneyCard key={journey.id} journey={journey} index={index} />
             ))}
           </div>
@@ -216,14 +229,15 @@ export default async function HomePage() {
       <section className="container py-20 md:py-28">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-extrabold uppercase tracking-[.2em] text-teal">
-            Learn with purpose
+            No sides. One shared search.
           </p>
           <h2 className="mt-4 font-serif text-4xl font-bold md:text-5xl">
-            A clear path for every starting point.
+            Look beyond the labels.
           </h2>
           <p className="mt-5 text-lg leading-8 text-muted-foreground">
-            Explore foundational questions, learn the essentials of Islam, or
-            take practical first steps as a new Muslim.
+            Judaism, Christianity, and Islam are often studied separately. Here,
+            we place them in one continuous Abrahamic conversation and explore
+            how each tradition approaches the same enduring questions.
           </p>
           <Button asChild className="mt-7">
             <Link href="/about">
@@ -238,19 +252,19 @@ export default async function HomePage() {
         <div className="islamic-grid overflow-hidden rounded-[2rem] bg-navy px-6 py-14 text-center text-white shadow-2xl md:px-12 md:py-16">
           <Sparkles className="mx-auto size-7 text-gold" />
           <h2 className="mx-auto mt-5 max-w-2xl font-serif text-4xl font-bold md:text-5xl">
-            Your next step can be a small one.
+            One question. Three traditions. One journey.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-slate-300">
-            Choose a path, complete one lesson, and let consistency turn
-            learning into a life of faith.
+            Deep-dive into a topic through Jewish, Christian, and Islamic
+            sources, observing the whole Abrahamic faith without picking sides.
           </p>
           <Button
             asChild
             size="lg"
             className="mt-8 bg-gold text-navy hover:bg-[#e0b24f]"
           >
-            <Link href="/onboarding">
-              Find my starting point <ArrowRight className="size-4" />
+            <Link href="/journeys">
+              Explore all journeys <ArrowRight className="size-4" />
             </Link>
           </Button>
         </div>

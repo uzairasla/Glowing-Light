@@ -1,8 +1,17 @@
-import { journeys } from "@guiding-light/learning-engine";
-import type { JourneyDefinition, LessonSummary } from "@guiding-light/types";
+import { journeys as allJourneys } from "@guiding-light/learning-engine";
+import type {
+  JourneyDefinition,
+  JourneySection,
+  LessonSummary,
+} from "@guiding-light/types";
 import { sanityFetch } from "@/lib/sanity/client";
 
-export { journeys };
+// Temporarily hidden until the full journey content is ready.
+const hiddenJourneySlugs = new Set(["exploring-the-abrahamic-faiths"]);
+
+export const journeys = allJourneys.filter(
+  (journey) => !hiddenJourneySlugs.has(journey.slug),
+);
 
 export type PublicQuestion = {
   slug: string;
@@ -147,9 +156,16 @@ export async function getPublishedLessonSitemapEntries(): Promise<
 export async function getJourneys(): Promise<JourneyDefinition[]> {
   try {
     const sanityTaxonomies = await sanityFetch<SanityTaxonomy[]>(taxonomyQuery);
-    const mapped = sanityTaxonomies?.map(mapSanityTaxonomy).filter(isPresent);
+    const mapped = sanityTaxonomies
+      ?.map(mapSanityTaxonomy)
+      .filter(isPresent)
+      .filter((journey) => !hiddenJourneySlugs.has(journey.slug));
 
-    return mapped && mapped.length > 0 ? mapped : journeys;
+    if (!mapped || mapped.length === 0) {
+      return journeys;
+    }
+
+    return mapped;
   } catch {
     return journeys;
   }
@@ -228,9 +244,32 @@ function mapSanityTaxonomy(taxonomy: SanityTaxonomy): JourneyDefinition | null {
       taxonomy.description ?? "A guided collection of related articles.",
     promise: taxonomy.description ?? "Move through this topic step by step.",
     lessons: articles.map(mapSanityArticle).filter(isPresent),
+    sections: mapSanitySections(taxonomy, staticJourney),
   };
 }
 
+function mapSanitySections(
+  taxonomy: SanityTaxonomy,
+  staticJourney?: JourneyDefinition,
+): JourneySection[] | undefined {
+  const mappedSections = (taxonomy.children ?? [])
+    .map((child) => {
+      if (!child.title || !child.slug) {
+        return null;
+      }
+
+      return {
+        id: child.slug,
+        title: child.title,
+        description: child.description,
+        lessons: (child.articles ?? []).map(mapSanityArticle).filter(isPresent),
+      };
+    })
+    .filter(isPresent)
+    .filter((section) => section.lessons.length > 0);
+
+  return mappedSections.length > 0 ? mappedSections : staticJourney?.sections;
+}
 function mapSanityArticle(article: SanityArticle): LessonSummary | null {
   if (!article.title || !article.slug) {
     return null;

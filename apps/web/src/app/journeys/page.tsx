@@ -12,6 +12,19 @@ export const metadata: Metadata = {
 
 export default async function JourneysPage() {
   const journeys = await getJourneys();
+  const preferredOrder = [
+    "questioning-religion",
+    "exploring-the-abrahamic-faiths",
+  ];
+  const orderedJourneys = [...journeys].sort((a, b) => {
+    const aRank = preferredOrder.indexOf(a.slug);
+    const bRank = preferredOrder.indexOf(b.slug);
+
+    if (aRank === -1 && bRank === -1) return 0;
+    if (aRank === -1) return 1;
+    if (bRank === -1) return -1;
+    return aRank - bRank;
+  });
 
   return (
     <main className="container py-16">
@@ -21,7 +34,7 @@ export default async function JourneysPage() {
         description="Choose a path that matches where you are, then explore each topic in a clear, intentional order."
       />
       <div className="mt-10 grid gap-5 lg:grid-cols-3">
-        {journeys.map((journey, index) => (
+        {orderedJourneys.map((journey, index) => (
           <JourneyCard key={journey.id} journey={journey} index={index} />
         ))}
       </div>
