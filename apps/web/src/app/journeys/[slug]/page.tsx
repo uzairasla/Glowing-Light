@@ -49,16 +49,6 @@ export default async function JourneyDetailPage({ params }: Props) {
   const firstPublishedLesson = journey.lessons.find((lesson) =>
     publishedSlugs.has(lesson.slug),
   );
-  const journeySections =
-    journey.sections && journey.sections.length > 0
-      ? journey.sections
-      : [
-          {
-            id: "journey-topics",
-            title: "Journey Topics",
-            lessons: journey.lessons,
-          },
-        ];
   const lessonOrder = new Map(
     journey.lessons.map((lesson, index) => [lesson.id, index + 1]),
   );
@@ -96,71 +86,49 @@ export default async function JourneyDetailPage({ params }: Props) {
         </aside>
       </div>
 
-      <div className="mt-14 space-y-14">
-        {journeySections.map((section, sectionIndex) => (
-          <section key={section.id} aria-labelledby={"section-" + section.id}>
-            <div className="mb-6 max-w-3xl">
-              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-gold">
-                Module {sectionIndex + 1}
-              </p>
-              <h2
-                id={"section-" + section.id}
-                className="mt-2 font-serif text-3xl font-bold md:text-4xl"
-              >
-                {section.title}
-              </h2>
-              {section.description ? (
-                <p className="mt-3 text-lg leading-8 text-muted-foreground">
-                  {section.description}
-                </p>
-              ) : null}
-            </div>
-            <div className="grid gap-4">
-              {section.lessons.map((lesson) => {
-                const isPublished = publishedSlugs.has(lesson.slug);
+      <div className="mt-14 grid gap-4">
+        {journey.lessons.map((lesson) => {
+          const isPublished = publishedSlugs.has(lesson.slug);
 
-                return (
-                  <Card
-                    key={lesson.id}
-                    className="grid gap-4 p-5 md:grid-cols-[auto_1fr_auto] md:items-center"
-                  >
-                    <span className="grid size-11 place-items-center rounded-2xl bg-teal-50 font-bold text-teal-900">
-                      {lessonOrder.get(lesson.id)}
-                    </span>
-                    <div>
-                      <h3 className="text-xl font-bold">
-                        {isPublished ? (
-                          <Link
-                            href={"/lessons/" + lesson.slug}
-                            className="text-foreground transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4"
-                          >
-                            {lesson.title}
-                          </Link>
-                        ) : (
-                          lesson.title
-                        )}
-                      </h3>
-                      <p className="mt-1 leading-7 text-muted-foreground">
-                        {lesson.summary}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="inline-flex items-center gap-1 text-sm font-semibold text-muted-foreground">
-                        <Clock className="size-4" aria-hidden="true" />
-                        {lesson.estimatedMinutes} min
-                      </span>
-                      {isPublished ? (
-                        <Button asChild variant="outline" size="sm">
-                          <Link href={"/lessons/" + lesson.slug}>Open</Link>
-                        </Button>
-                      ) : null}
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
-          </section>
-        ))}
+          return (
+            <Card
+              key={lesson.id}
+              className="grid gap-4 p-5 md:grid-cols-[auto_1fr_auto] md:items-center"
+            >
+              <span className="grid size-11 place-items-center rounded-2xl bg-teal-50 font-bold text-teal-900">
+                {lessonOrder.get(lesson.id)}
+              </span>
+              <div>
+                <h2 className="text-xl font-bold">
+                  {isPublished ? (
+                    <Link
+                      href={"/lessons/" + lesson.slug}
+                      className="text-foreground transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4"
+                    >
+                      {lesson.title}
+                    </Link>
+                  ) : (
+                    lesson.title
+                  )}
+                </h2>
+                <p className="mt-1 leading-7 text-muted-foreground">
+                  {lesson.summary}
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center gap-1 text-sm font-semibold text-muted-foreground">
+                  <Clock className="size-4" aria-hidden="true" />
+                  {lesson.estimatedMinutes} min
+                </span>
+                {isPublished ? (
+                  <Button asChild variant="outline" size="sm">
+                    <Link href={"/lessons/" + lesson.slug}>Open</Link>
+                  </Button>
+                ) : null}
+              </div>
+            </Card>
+          );
+        })}
       </div>
     </main>
   );

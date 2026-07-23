@@ -229,7 +229,7 @@ export default async function HomePage() {
       <section className="container py-20 md:py-28">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-extrabold uppercase tracking-[.2em] text-teal">
-            No sides. One shared search.
+            No sides. One shared search. One Truth.
           </p>
           <h2 className="mt-4 font-serif text-4xl font-bold md:text-5xl">
             Look beyond the labels.

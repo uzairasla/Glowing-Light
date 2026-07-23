@@ -34,14 +34,6 @@ export type LessonSummary = {
   difficulty: LessonDifficulty;
 };
 
-export type JourneySection = {
-  id: string;
-  title: string;
-  description?: string;
-  lessons: LessonSummary[];
-  sections?: JourneySection[];
-};
-
 export type JourneyDefinition = {
   id: string;
   slug: string;
@@ -50,5 +42,4 @@ export type JourneyDefinition = {
   description: string;
   promise: string;
   lessons: LessonSummary[];
-  sections?: JourneySection[];
 };
