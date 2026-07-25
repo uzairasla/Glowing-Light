@@ -1,6 +1,6 @@
 import { journeys as allJourneys } from "@guiding-light/learning-engine";
 import type { JourneyDefinition, LessonSummary } from "@guiding-light/types";
-import { sanityFetch } from "@/lib/sanity/client";
+import { sanityFetch, sanityPreviewFetch } from "@/lib/sanity/client";
 
 // Temporarily hidden until the full journey content is ready.
 const hiddenJourneySlugs = new Set(["exploring-the-abrahamic-faiths"]);
@@ -216,6 +216,32 @@ export async function getLessonBySlug(
 
   const lessons = await getLessons();
   return lessons.find((lesson) => lesson.slug === slug);
+}
+
+export async function getPreviewLessonBySlug(
+  identifier: string,
+): Promise<LessonWithJourney | undefined> {
+  try {
+    const slug = normalizePreviewLessonSlug(identifier);
+    const sanityArticle = await sanityPreviewFetch<SanityArticleDetail>(
+      articleBySlugQuery,
+      { slug },
+    );
+
+    return sanityArticle
+      ? (mapSanityArticleDetail(sanityArticle) ?? undefined)
+      : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+export function normalizePreviewLessonSlug(identifier: string) {
+  const draftArticleIdPrefix = "drafts.article-";
+
+  return identifier.startsWith(draftArticleIdPrefix)
+    ? identifier.slice(draftArticleIdPrefix.length)
+    : identifier;
 }
 
 function mapSanityTaxonomy(taxonomy: SanityTaxonomy): JourneyDefinition | null {

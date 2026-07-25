@@ -1,3 +1,5 @@
+import "server-only";
+
 import { createClient } from "@sanity/client";
 import { env } from "@/lib/env";
 
@@ -20,4 +22,28 @@ export async function sanityFetch<T>(
   }
 
   return sanityClient.fetch<T>(query, params, { cache: "no-store" });
+}
+
+const sanityReadToken = process.env.SANITY_API_READ_TOKEN;
+
+const sanityPreviewClient =
+  sanityClient && sanityReadToken
+    ? sanityClient.withConfig({
+        token: sanityReadToken,
+        useCdn: false,
+        perspective: "drafts",
+      })
+    : null;
+
+export const isSanityPreviewConfigured = Boolean(sanityPreviewClient);
+
+export async function sanityPreviewFetch<T>(
+  query: string,
+  params: Record<string, string> = {},
+) {
+  if (!sanityPreviewClient) {
+    return sanityFetch<T>(query, params);
+  }
+
+  return sanityPreviewClient.fetch<T>(query, params, { cache: "no-store" });
 }
