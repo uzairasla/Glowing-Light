@@ -73,6 +73,7 @@ export default async function GuidesPage() {
         </a>
         <nav className="nav" aria-label="Main navigation">
           <a href="/guides" aria-current="page">Guides</a>
+          <a href="/kits">Kits</a>
           <a href="/author">Author</a>
         </nav>
       </header>
@@ -131,7 +132,7 @@ export default async function GuidesPage() {
           <span className="brand-mark" aria-hidden="true">D<span>/</span>F</span>
           <div><strong>DEV FIELDNOTES</strong><small>Tested solutions for modern web development.</small></div>
         </div>
-        <div className="footer-links"><a href="/guides">Guides</a><a href="/author">Author</a></div>
+        <div className="footer-links"><a href="/guides">Guides</a><a href="/kits">Kits</a><a href="/author">Author</a></div>
         <span className="copyright">{"\u00A9"} 2026 Dev Fieldnotes</span>
       </footer>
     </div>

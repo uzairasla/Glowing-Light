@@ -60,6 +60,7 @@ function ArticleHeader() {
       </a>
       <nav className={open ? "nav open" : "nav"} aria-label="Main navigation">
         <a href="/guides">Guides</a>
+        <a href="/kits">Kits</a>
         <a href="/author">Author</a>
       </nav>
       <button

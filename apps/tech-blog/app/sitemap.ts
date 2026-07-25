@@ -9,6 +9,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     { url: siteUrl, changeFrequency: "weekly", priority: 1 },
     { url: `${siteUrl}/guides`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${siteUrl}/kits`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${siteUrl}/mcp-starter-kit`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${siteUrl}/author`, changeFrequency: "yearly", priority: 0.6 },
     ...slugs.map((slug) => ({
       url: `${siteUrl}/guides/${slug}`,
