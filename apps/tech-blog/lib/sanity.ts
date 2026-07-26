@@ -70,3 +70,23 @@ export async function getGuideArticles(): Promise<TechArticleSummary[]> {
     { next: { revalidate: 60, tags: ["techArticles", "techGuides"] } },
   );
 }
+
+export async function getPostgresqlFeedArticles(): Promise<TechArticle[]> {
+  return getClient().fetch<TechArticle[]>(
+    `*[
+      _type == "techArticle" &&
+      defined(slug.current) &&
+      "postgresql" in taxonomies[]->slug.current
+    ] | order(coalesce(publishedAt, _createdAt) desc) {
+      _id,title,"slug":slug.current,description,publishedAt,updatedAt,readTime,kicker,
+      body[]{..., markDefs[]{...}},
+      "taxonomies":taxonomies[]->title,
+      sourceUrls,
+      "coverImageUrl":coverImage.asset->url,
+      "coverImageAlt":coverImage.alt,
+      seoTitle,seoDescription
+    }`,
+    {},
+    { next: { revalidate: 300, tags: ["techArticles", "techPostgresqlFeed"] } },
+  );
+}

@@ -14,7 +14,17 @@ export const metadata: Metadata = {
   },
   description:
     "Practical, tested guides for debugging Next.js, Sanity, deployment, caching, and modern web development.",
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": [
+        {
+          url: "/feeds/postgresql.xml",
+          title: "Dev Fieldnotes - PostgreSQL",
+        },
+      ],
+    },
+  },
   openGraph: {
     title: "Dev Fieldnotes - Tested solutions for modern web development",
     description:
