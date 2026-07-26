@@ -5,9 +5,9 @@ import { RichText } from "@/components/rich-text";
 import { Card } from "@/components/ui/card";
 import {
   getPreviewLessonBySlug,
+  isSanityPreviewConfigured,
   normalizePreviewLessonSlug,
-} from "@/lib/content";
-import { isSanityPreviewConfigured } from "@/lib/sanity/client";
+} from "@/lib/preview-content";
 
 type Props = {
   params: Promise<{ slug: string }>;
