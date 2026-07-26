@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 const links = [
   { href: "/journeys", label: "Learn" },
   { href: "/about", label: "About" },
+  { href: "/faith-leaders", label: "Share" },
 ];
 
 export function SiteHeader() {

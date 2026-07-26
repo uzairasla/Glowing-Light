@@ -57,6 +57,9 @@ export default function RootLayout({
                 <Link href="/about" className="hover:text-primary">
                   About
                 </Link>
+                <Link href="/faith-leaders" className="hover:text-primary">
+                  For faith leaders
+                </Link>
               </div>
             </div>
           </footer>
