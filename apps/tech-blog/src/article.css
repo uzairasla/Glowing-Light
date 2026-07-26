@@ -18,6 +18,13 @@
 .article-content { min-width: 0; }
 .article-content .lead, .article-content > p:first-child { margin-top: 0; font-size: 24px; line-height: 1.55; letter-spacing: -.025em; }
 .article-content p, .article-content li { color: #44413d; font-size: 16px; line-height: 1.8; }
+.article-content p a, .article-content li a {
+  color: var(--blue); font-weight: 700; text-decoration: underline;
+  text-decoration-color: var(--blue); text-decoration-thickness: 2px; text-underline-offset: 4px;
+  transition: color .18s ease, background-color .18s ease, text-decoration-color .18s ease;
+}
+.article-content p a:hover, .article-content li a:hover { color: var(--ink); background: var(--lime); text-decoration-color: var(--ink); }
+.article-content p a:focus-visible, .article-content li a:focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
 .article-content section { scroll-margin-top: 110px; margin-top: 88px; }
 .article-content section:first-of-type { margin-top: 78px; }
 .section-label { margin-bottom: 20px; color: var(--blue); font: 500 10px var(--mono); text-transform: uppercase; letter-spacing: .12em; }
