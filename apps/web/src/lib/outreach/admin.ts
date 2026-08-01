@@ -1,28 +1,51 @@
+import { createHmac, timingSafeEqual } from "node:crypto";
+import { cookies } from "next/headers";
 import { createClient } from "@supabase/supabase-js";
-import { getCurrentUser } from "@/lib/auth/session";
 
-export function getOutreachAdminEmails() {
-  return new Set(
-    (process.env.OUTREACH_ADMIN_EMAILS ?? "")
-      .split(",")
-      .map((email) => email.trim().toLowerCase())
-      .filter(Boolean),
-  );
+export const OUTREACH_SESSION_COOKIE = "gl_outreach_admin";
+const SESSION_DURATION_SECONDS = 60 * 60 * 12;
+
+function safeEqual(left: string, right: string) {
+  const leftBuffer = Buffer.from(left);
+  const rightBuffer = Buffer.from(right);
+  return leftBuffer.length === rightBuffer.length && timingSafeEqual(leftBuffer, rightBuffer);
+}
+
+function sessionSignature(expiresAt: string) {
+  const secret = process.env.OUTREACH_ADMIN_SESSION_SECRET;
+  if (!secret) return null;
+  return createHmac("sha256", secret).update(expiresAt).digest("hex");
+}
+
+export function verifyOutreachPassword(candidate: string) {
+  const password = process.env.OUTREACH_ADMIN_PASSWORD;
+  return Boolean(password && safeEqual(candidate, password));
+}
+
+export function createOutreachSession() {
+  const expiresAt = String(Math.floor(Date.now() / 1000) + SESSION_DURATION_SECONDS);
+  const signature = sessionSignature(expiresAt);
+  if (!signature) throw new Error("OUTREACH_ADMIN_SESSION_SECRET is not configured.");
+  return {
+    name: OUTREACH_SESSION_COOKIE,
+    value: `${expiresAt}.${signature}`,
+    options: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict" as const,
+      maxAge: SESSION_DURATION_SECONDS,
+      path: "/",
+    },
+  };
 }
 
 export async function requireOutreachAdmin() {
-  if (process.env.NODE_ENV !== "production") {
-    return {
-      id: "00000000-0000-0000-0000-000000000000",
-      email: "local-outreach-admin@localhost",
-    };
-  }
-
-  const user = await getCurrentUser();
-  if (!user?.email || !getOutreachAdminEmails().has(user.email.toLowerCase())) {
-    return null;
-  }
-  return user;
+  const value = (await cookies()).get(OUTREACH_SESSION_COOKIE)?.value;
+  if (!value) return false;
+  const [expiresAt, signature] = value.split(".");
+  if (!expiresAt || !signature || Number(expiresAt) <= Math.floor(Date.now() / 1000)) return false;
+  const expected = sessionSignature(expiresAt);
+  return Boolean(expected && safeEqual(signature, expected));
 }
 
 export function createOutreachAdminClient() {

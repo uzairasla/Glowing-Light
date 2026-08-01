@@ -14,24 +14,29 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const admin = await requireOutreachAdmin();
-  if (!admin) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  if (!(await requireOutreachAdmin())) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   const supabase = createOutreachAdminClient();
   if (!supabase) return NextResponse.json({ error: "Supabase is not configured." }, { status: 503 });
   const body = await request.json();
+
   if (body.type === "contacts") {
     const contacts = Array.isArray(body.contacts) ? body.contacts : [];
     if (!contacts.length || contacts.length > 500) return NextResponse.json({ error: "Provide 1-500 contacts." }, { status: 400 });
     const normalized = contacts.map((item: Record<string, unknown>) => ({
       organization: String(item.organization ?? "").trim(),
       email: String(item.email ?? "").trim().toLowerCase(),
-      city: item.city || null, state: item.state || null, website: item.website || null,
-      source_url: item.source_url || null, source_type: item.source_type || null,
+      city: item.city || null,
+      state: item.state || null,
+      website: item.website || null,
+      source_url: item.source_url || null,
+      source_type: item.source_type || null,
     })).filter((item: { organization: string; email: string }) => item.organization && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(item.email));
-    const { error } = await supabase.from("outreach_contacts").upsert(normalized, { onConflict: "email" });
+    if (!normalized.length) return NextResponse.json({ error: "No valid contacts were provided." }, { status: 400 });
+    const { data: imported, error } = await supabase.from("outreach_contacts").upsert(normalized, { onConflict: "email" }).select();
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json({ imported: normalized.length });
+    return NextResponse.json({ imported: imported.length, contacts: imported });
   }
+
   const campaign = {
     name: String(body.name ?? "").trim(),
     subject: String(body.subject ?? "").trim(),
@@ -39,7 +44,6 @@ export async function POST(request: Request) {
     body_text: String(body.body_text ?? "").trim(),
     call_to_action_url: String(body.call_to_action_url ?? "").trim() || null,
     call_to_action_label: String(body.call_to_action_label ?? "").trim() || null,
-    created_by: admin.id,
   };
   if (!campaign.name || !campaign.subject || !campaign.body_text) return NextResponse.json({ error: "Name, subject, and body are required." }, { status: 400 });
   const { data, error } = await supabase.from("outreach_campaigns").insert(campaign).select().single();

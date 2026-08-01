@@ -26,7 +26,6 @@ create table if not exists public.outreach_campaigns (
   call_to_action_url text,
   call_to_action_label text,
   status text not null default 'draft',
-  created_by uuid references auth.users(id) on delete set null,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   constraint outreach_campaigns_status_check
@@ -59,14 +58,29 @@ create unique index if not exists outreach_deliveries_resend_email_id_idx
   on public.outreach_deliveries(resend_email_id)
   where resend_email_id is not null;
 
+create or replace function public.set_updated_at()
+returns trigger
+language plpgsql
+security invoker
+set search_path = ''
+as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$;
+
+drop trigger if exists outreach_contacts_set_updated_at on public.outreach_contacts;
 create trigger outreach_contacts_set_updated_at
 before update on public.outreach_contacts
 for each row execute function public.set_updated_at();
 
+drop trigger if exists outreach_campaigns_set_updated_at on public.outreach_campaigns;
 create trigger outreach_campaigns_set_updated_at
 before update on public.outreach_campaigns
 for each row execute function public.set_updated_at();
 
+drop trigger if exists outreach_deliveries_set_updated_at on public.outreach_deliveries;
 create trigger outreach_deliveries_set_updated_at
 before update on public.outreach_deliveries
 for each row execute function public.set_updated_at();
@@ -75,5 +89,5 @@ alter table public.outreach_contacts enable row level security;
 alter table public.outreach_campaigns enable row level security;
 alter table public.outreach_deliveries enable row level security;
 
--- No browser policies are intentional. Access is restricted to server routes using
--- the service-role client after an administrator allowlist check.
+-- No browser policies are intentional. Access is restricted to password-protected
+-- server routes using the service-role client.

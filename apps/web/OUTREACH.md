@@ -3,9 +3,9 @@
 1. Apply `packages/database/supabase/migrations/0002_outreach_campaigns.sql` to Supabase.
 2. Verify the sending domain in Resend and configure its SPF and DKIM records.
 3. Add the outreach variables from the repository `.env.example` to Vercel.
-4. Generate `OUTREACH_UNSUBSCRIBE_SECRET` as a long random value.
+4. Set a strong `OUTREACH_ADMIN_PASSWORD`, then generate long random values for `OUTREACH_ADMIN_SESSION_SECRET` and `OUTREACH_UNSUBSCRIBE_SECRET`.
 5. Add `https://theglowinglight.com/api/resend/webhook` in Resend for delivered, opened, clicked, bounced, and complained events.
-6. Sign in with an address in `OUTREACH_ADMIN_EMAILS`, then open `/admin/outreach`.
+6. Open `/admin/outreach` and enter the dedicated admin password.
 7. Paste the seven relevant columns from the researched workbook into the importer.
 8. Create a campaign and send a test to yourself.
 9. Only after reviewing the test, set `OUTREACH_SENDING_ENABLED=true`.
