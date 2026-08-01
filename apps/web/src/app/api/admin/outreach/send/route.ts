@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ test: true, id: result.id });
   }
 
-  const { data: contacts } = await supabase.from("outreach_contacts").select("*").eq("status", "active").in("id", contactIds);
+  const { data: contacts } = await supabase.from("outreach_contacts").select("*").eq("status", "active").is("last_contacted_at", null).in("id", contactIds);
   const contactsById = new Map((contacts ?? []).map((contact) => [contact.id, contact]));
   const orderedContacts = contactIds.map((id) => contactsById.get(id)).filter((contact): contact is NonNullable<typeof contact> => Boolean(contact));
   const sent = [];
