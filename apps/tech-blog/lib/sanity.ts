@@ -54,6 +54,58 @@ export async function getTechArticleSlugs(): Promise<string[]> {
   );
 }
 
+export type GuideArticlesPage = {
+  items: TechArticleSummary[];
+  latest: TechArticleSummary | null;
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+};
+
+export async function getGuideArticlesPage(
+  page: number,
+  pageSize = 8,
+): Promise<GuideArticlesPage> {
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+  const filter = `
+    _type == "techArticle" &&
+    defined(slug.current) &&
+    "guides" in taxonomies[]->slug.current
+  `;
+  const projection = `{
+    _id,title,"slug":slug.current,description,publishedAt,updatedAt,readTime,
+    "taxonomies":taxonomies[]->title,
+    "coverImageUrl":coalesce(coverImage.asset->url, "/articles/sanity-content-not-updating/cover.png"),
+    "coverImageAlt":select(defined(coverImage.alt) && coverImage.alt != "" => coverImage.alt, "A diagnostic content pipeline showing an update blocked at a cache layer between a CMS and website")
+  }`;
+
+  const result = await getClient().fetch<{
+    items: TechArticleSummary[];
+    latest: TechArticleSummary | null;
+    total: number;
+  }>(
+    `{
+      "items": *[${filter}]
+        | order(coalesce(publishedAt, _createdAt) desc) [$start...$end]
+        ${projection},
+      "latest": *[${filter}]
+        | order(coalesce(publishedAt, _createdAt) desc) [0]
+        ${projection},
+      "total": count(*[${filter}])
+    }`,
+    {start, end},
+    {next: {revalidate: 60, tags: ["techArticles", "techGuides"]}},
+  );
+
+  return {
+    ...result,
+    page,
+    pageSize,
+    totalPages: Math.max(1, Math.ceil(result.total / pageSize)),
+  };
+}
 export async function getGuideArticles(): Promise<TechArticleSummary[]> {
   return getClient().fetch<TechArticleSummary[]>(
     `*[
