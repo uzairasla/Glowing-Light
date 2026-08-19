@@ -1,13 +1,32 @@
 "use client";
 
-import { ArrowRight, Check, ChevronRight, Clock3, Menu, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronRight, Clock3, Menu, X } from "lucide-react";
 import { useState } from "react";
 import type { TechArticleSummary } from "./tech-article";
 
-export function DevFieldnotesHome({ guides }: { guides: TechArticleSummary[] }) {
+type DevFieldnotesHomeProps = {
+  guides: TechArticleSummary[];
+  latestGuide: TechArticleSummary | null;
+  currentPage: number;
+  pageSize: number;
+  totalPages: number;
+};
+
+function pageHref(page: number) {
+  return page === 1 ? "/#guides" : `/?page=${page}#guides`;
+}
+
+export function DevFieldnotesHome({
+  guides,
+  latestGuide,
+  currentPage,
+  pageSize,
+  totalPages,
+}: DevFieldnotesHomeProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const latestGuide = guides[0];
   const latestGuideHref = latestGuide ? `/guides/${latestGuide.slug}` : "/guides";
+  const pageStart = (currentPage - 1) * pageSize;
+  const pages = Array.from({length: totalPages}, (_, index) => index + 1);
 
   return (
     <div className="site-shell">
@@ -51,12 +70,13 @@ export function DevFieldnotesHome({ guides }: { guides: TechArticleSummary[] }) 
           <div className="article-grid">
             {guides.map((guide, index) => {
               const guideHref = `/guides/${guide.slug}`;
+              const articleNumber = pageStart + index + 1;
 
               return (
-                <article className={`article-card ${index % 2 === 0 ? "lime" : "blue"}`} key={guide.slug}>
+                <article className={`article-card ${articleNumber % 2 === 1 ? "lime" : "blue"}`} key={guide.slug}>
                   <a className="article-visual" href={guideHref} aria-label={`Read ${guide.title}`}>
                     {guide.coverImageUrl && <img src={guide.coverImageUrl} alt={guide.coverImageAlt || ""} />}
-                    <span className="article-number">{index === 0 ? "NEW" : String(index + 1).padStart(2, "0")}</span>
+                    <span className="article-number">{articleNumber === 1 ? "NEW" : String(articleNumber).padStart(2, "0")}</span>
                     <span className="article-category">{guide.taxonomies?.filter((taxonomy) => taxonomy !== "Guides").slice(0, 2).join(" · ")}</span>
                   </a>
                   <div className="article-body">
@@ -68,6 +88,51 @@ export function DevFieldnotesHome({ guides }: { guides: TechArticleSummary[] }) 
               );
             })}
           </div>
+          {totalPages > 1 && (
+            <nav className="pagination" aria-label="Article pages">
+              {currentPage > 1 ? (
+                <a
+                  className="pagination-direction"
+                  href={pageHref(currentPage - 1)}
+                  rel="prev"
+                >
+                  <ArrowLeft size={16} /> Previous
+                </a>
+              ) : (
+                <span className="pagination-direction disabled" aria-disabled="true">
+                  <ArrowLeft size={16} /> Previous
+                </span>
+              )}
+
+              <div className="pagination-pages">
+                {pages.map((page) => (
+                  <a
+                    key={page}
+                    href={pageHref(page)}
+                    aria-label={`Page ${page}`}
+                    aria-current={page === currentPage ? "page" : undefined}
+                  >
+                    {String(page).padStart(2, "0")}
+                  </a>
+                ))}
+              </div>
+
+              {currentPage < totalPages ? (
+                <a
+                  className="pagination-direction"
+                  href={pageHref(currentPage + 1)}
+                  rel="next"
+                >
+                  Next <ArrowRight size={16} />
+                </a>
+              ) : (
+                <span className="pagination-direction disabled" aria-disabled="true">
+                  Next <ArrowRight size={16} />
+                </span>
+              )}
+              <span className="pagination-summary">Page {currentPage} of {totalPages}</span>
+            </nav>
+          )}
         </section>
 
         <section className="manifesto">
