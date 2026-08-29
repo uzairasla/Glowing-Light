@@ -4,15 +4,20 @@ import {
   ArrowRight,
   BookOpen,
   Check,
+  Clock,
   Compass,
   Heart,
+  Newspaper,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
 import { JourneyCard } from "@/components/journey-card";
 import { JsonLd } from "@/components/json-ld";
 import { Button } from "@/components/ui/button";
-import { getJourneys } from "@/lib/content";
+import {
+  getJourneys,
+  getPublishedLessonSitemapEntries,
+} from "@/lib/content";
 import { env } from "@/lib/env";
 
 export const metadata: Metadata = {
@@ -43,8 +48,34 @@ const principles = [
   },
 ];
 
+function getUtcWeekKey(date: Date) {
+  const monday = new Date(
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()),
+  );
+  const daysSinceMonday = (monday.getUTCDay() + 6) % 7;
+  monday.setUTCDate(monday.getUTCDate() - daysSinceMonday);
+  return monday.toISOString().slice(0, 10);
+}
+
+function weeklyHash(value: string) {
+  let hash = 2166136261;
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+
+  return hash >>> 0;
+}
+
 export default async function HomePage() {
-  const journeys = await getJourneys();
+  const [journeys, publishedLessons] = await Promise.all([
+    getJourneys(),
+    getPublishedLessonSitemapEntries(),
+  ]);
+  const publishedSlugs = new Set(
+    publishedLessons.map((lesson) => lesson.slug),
+  );
   const questioningJourney = journeys.find(
     (journey) => journey.slug === "questioning-religion",
   );
@@ -58,6 +89,35 @@ export default async function HomePage() {
     ...featuredJourneys,
     ...journeys.filter((journey) => !featuredSlugs.has(journey.slug)),
   ].slice(0, 3);
+  const articlesById = new Map<
+    string,
+    (typeof journeys)[number]["lessons"][number] & { journeyTitle: string }
+  >();
+
+  for (const journey of journeys) {
+    for (const lesson of journey.lessons) {
+      if (
+        publishedSlugs.has(lesson.slug) &&
+        !articlesById.has(lesson.id)
+      ) {
+        articlesById.set(lesson.id, {
+          ...lesson,
+          journeyTitle: journey.title,
+        });
+      }
+    }
+  }
+
+  const weekKey = getUtcWeekKey(new Date());
+  const highlightedArticles = [...articlesById.values()]
+    .sort((articleA, articleB) => {
+      const rankDifference =
+        weeklyHash(`${weekKey}:${articleA.slug}`) -
+        weeklyHash(`${weekKey}:${articleB.slug}`);
+
+      return rankDifference || articleA.slug.localeCompare(articleB.slug);
+    })
+    .slice(0, 3);
 
   return (
     <main>
@@ -199,6 +259,77 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {highlightedArticles.length > 0 ? (
+        <section className="border-y border-amber-200/70 bg-[#fbf7ed] py-20 md:py-24">
+          <div className="container">
+            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+              <div className="max-w-2xl">
+                <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.2em] text-amber-700">
+                  <Newspaper className="size-4" aria-hidden="true" />
+                  Editor&apos;s weekly selection
+                </div>
+                <h2 className="mt-4 font-serif text-4xl font-bold text-balance md:text-5xl">
+                  Highlighted articles this week
+                </h2>
+                <p className="mt-4 text-lg leading-8 text-muted-foreground">
+                  Three thoughtful reads from across the Abrahamic tradition,
+                  refreshed automatically every week.
+                </p>
+              </div>
+              <Link
+                href="/journeys"
+                className="flex items-center gap-2 font-bold text-teal transition hover:text-teal-800"
+              >
+                Browse every topic
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+            </div>
+
+            <div className="mt-10 grid gap-5 lg:grid-cols-3">
+              {highlightedArticles.map((article, index) => (
+                <article
+                  key={article.id}
+                  className="group relative flex min-h-80 flex-col overflow-hidden rounded-[1.75rem] border border-amber-200/80 bg-white p-7 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+                >
+                  <div
+                    className={`absolute inset-x-0 top-0 h-1.5 ${["bg-teal", "bg-[#4185b2]", "bg-gold"][index]}`}
+                    aria-hidden="true"
+                  />
+                  <div className="flex items-center justify-between gap-4 text-xs font-extrabold uppercase tracking-[.13em]">
+                    <span className="text-teal">{article.journeyTitle}</span>
+                    <span className="flex shrink-0 items-center gap-1.5 text-muted-foreground">
+                      <Clock className="size-3.5" aria-hidden="true" />
+                      {article.estimatedMinutes} min
+                    </span>
+                  </div>
+                  <h3 className="mt-6 font-serif text-2xl font-bold leading-tight text-balance md:text-3xl">
+                    <Link
+                      href={`/lessons/${article.slug}`}
+                      className="transition group-hover:text-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4"
+                    >
+                      {article.title}
+                    </Link>
+                  </h3>
+                  <p className="mt-4 flex-1 leading-7 text-muted-foreground">
+                    {article.summary}
+                  </p>
+                  <Link
+                    href={`/lessons/${article.slug}`}
+                    className="mt-7 inline-flex items-center gap-2 font-bold text-navy transition group-hover:text-teal"
+                  >
+                    Read article
+                    <ArrowRight
+                      className="size-4 transition group-hover:translate-x-1"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="border-y bg-[#f1f7f5] py-20 md:py-24">
         <div className="container">
