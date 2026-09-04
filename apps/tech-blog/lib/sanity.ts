@@ -54,18 +54,43 @@ export async function getTechArticleSlugs(): Promise<string[]> {
   );
 }
 
-export async function getGuideArticles(): Promise<TechArticleSummary[]> {
+export const GUIDES_PER_PAGE = 8;
+
+type GuideArticleOptions = {
+  offset?: number;
+  limit?: number;
+};
+
+export async function getGuideArticles(
+  options: GuideArticleOptions = {},
+): Promise<TechArticleSummary[]> {
+  const offset = Math.max(0, Math.trunc(options.offset ?? 0));
+  const limit = Math.max(1, Math.trunc(options.limit ?? GUIDES_PER_PAGE));
+  const end = offset + limit;
+
   return getClient().fetch<TechArticleSummary[]>(
     `*[
       _type == "techArticle" &&
       defined(slug.current) &&
       "guides" in taxonomies[]->slug.current
-    ] | order(coalesce(publishedAt, _createdAt) desc) {
+    ] | order(coalesce(publishedAt, _createdAt) desc) [${offset}...${end}] {
       _id,title,"slug":slug.current,description,publishedAt,updatedAt,readTime,
       "taxonomies":taxonomies[]->title,
       "coverImageUrl":coalesce(coverImage.asset->url, "/articles/sanity-content-not-updating/cover.png"),
       "coverImageAlt":select(defined(coverImage.alt) && coverImage.alt != "" => coverImage.alt, "A diagnostic content pipeline showing an update blocked at a cache layer between a CMS and website")
     }`,
+    {},
+    { next: { revalidate: 60, tags: ["techArticles", "techGuides"] } },
+  );
+}
+
+export async function getGuideArticleCount(): Promise<number> {
+  return getClient().fetch<number>(
+    `count(*[
+      _type == "techArticle" &&
+      defined(slug.current) &&
+      "guides" in taxonomies[]->slug.current
+    ])`,
     {},
     { next: { revalidate: 60, tags: ["techArticles", "techGuides"] } },
   );

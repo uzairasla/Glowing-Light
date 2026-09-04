@@ -4,7 +4,13 @@ import { ArrowRight, Check, ChevronRight, Clock3, Menu, X } from "lucide-react";
 import { useState } from "react";
 import type { TechArticleSummary } from "./tech-article";
 
-export function DevFieldnotesHome({ guides }: { guides: TechArticleSummary[] }) {
+export function DevFieldnotesHome({
+  guides,
+  hasMoreGuides,
+}: {
+  guides: TechArticleSummary[];
+  hasMoreGuides: boolean;
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const latestGuide = guides[0];
   const latestGuideHref = latestGuide ? `/guides/${latestGuide.slug}` : "/guides";
@@ -68,6 +74,13 @@ export function DevFieldnotesHome({ guides }: { guides: TechArticleSummary[] }) 
               );
             })}
           </div>
+          {hasMoreGuides && (
+            <div className="guides-archive-cta">
+              <a className="dark-button" href="/guides?page=2">
+                Read all guides <ArrowRight size={18} />
+              </a>
+            </div>
+          )}
         </section>
 
         <section className="manifesto">
