@@ -26,7 +26,7 @@ export async function SiteHeader() {
 
         <nav className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
           <Link href="/journeys" className="hover:text-primary">
-            Learn
+            Journeys
           </Link>
 
           <div className="group relative">
