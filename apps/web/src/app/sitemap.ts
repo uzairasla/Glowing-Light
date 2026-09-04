@@ -13,7 +13,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getTopics(),
     getPublishedLessonSitemapEntries(),
   ]);
-  const staticRoutes = ["", "/about", "/journeys", "/faith-leaders"];
+  const staticRoutes = [
+    "",
+    "/about",
+    "/journeys",
+    "/topics",
+    "/faith-leaders",
+  ];
 
   return [
     ...staticRoutes.map((route) => ({
