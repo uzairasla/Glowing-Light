@@ -35,8 +35,8 @@ const article = {
   title:'Sanity Draft Mode isn’t working in the Next.js App Router.',
   slug:{_type:'slug',current:'sanity-draft-mode-not-working-nextjs'},
   description:'A source-to-browser debugging guide for Draft Mode activation, cookies, draft perspectives, tokens, CORS, stega, and live preview in the Next.js App Router.',
-  kicker:'Sanity field guide 002', readTime:'16 min', difficulty:'Intermediate',
-  publishedAt:'2026-07-20T12:00:00.000Z', updatedAt:'2026-07-20T12:00:00.000Z',
+  kicker:'Sanity field guide 002', readTime:'18 min', difficulty:'Intermediate',
+  publishedAt:'2026-07-20T12:00:00.000Z', updatedAt:'2026-07-27T12:00:00.000Z',
   coverImage:{_type:'image',asset:{_type:'reference',_ref:coverAsset._id},alt:'A secure Draft Mode pipeline connecting a CMS document, an authentication gate, a browser cookie, draft inspection, and a rendered webpage'},
   taxonomies:[
     {_key:'sanity',_type:'reference',_ref:'tech-taxonomy-sanity'},
@@ -52,6 +52,7 @@ const article = {
     {_key:'src3',title:'Perspectives for Content Lake',url:'https://www.sanity.io/docs/content-lake/perspectives'},
     {_key:'src4',title:'Configuring the Sanity client for Next.js',url:'https://www.sanity.io/docs/nextjs/configure-sanity-client-nextjs'},
     {_key:'src5',title:'Next.js Draft Mode',url:'https://nextjs.org/docs/app/guides/draft-mode'},
+    {_key:'src6',title:'Presenting Portable Text',url:'https://www.sanity.io/docs/developer-guides/presenting-block-text'},
   ],
   body:[
     p('Sanity Studio shows an unpublished edit, but the embedded Next.js preview still renders the published document. Sometimes the preview route returns 404. Sometimes Draft Mode reports enabled while the content never changes. Sometimes everything works locally and fails after deployment. These symptoms look similar, but they belong to different contracts in the preview pipeline.'),
@@ -76,10 +77,44 @@ const article = {
     code('Temporary server diagnostic','typescript','neutral',`import {draftMode} from 'next/headers'\n\nconst {isEnabled} = await draftMode()\nconsole.log({draftMode: isEnabled})`),
     p('If this is false, stay focused on the route, redirect, hostname, HTTPS, and cookie. If it is true, stop debugging activation and move to the Sanity fetch.'),
     h3('4. Compare a published fetch with a draft fetch'),
-    p('The drafts perspective requires authentication and bypasses the CDN. A client that remains on perspective: published correctly hides unpublished edits even when Next.js Draft Mode is enabled. A client using useCdn: true with drafts is invalid because draft queries are not served by the CDN.'),
+    p('The drafts perspective requires authentication and bypasses the CDN. A client that remains on perspective: published correctly hides unpublished edits even when Next.js Draft Mode is enabled. Draft queries are not served by the API CDN, so the preview client must use perspective: drafts, a server-side Viewer token, and useCdn: false together.'),
     code('Manual draft client check','typescript','good',`const previewClient = client.withConfig({\n  token: process.env.SANITY_API_READ_TOKEN,\n  perspective: 'drafts',\n  useCdn: false,\n  stega: true,\n})`),
     h3('5. Verify the page uses the preview-aware fetch'),
     p('A correct enable route cannot affect a page that still calls an unrelated client.fetch configured permanently for published content. Use sanityFetch in the rendered page path, or make your custom loader explicitly read Draft Mode and apply the requested perspective, token, CDN, and stega settings.'),
+    h3('6. Keep the route slug separate from the draft document ID'),
+    p('The preview URL should normally use the same slug as the published route, and the GROQ query should compare slug.current with that exact route parameter. Sanity stores an unpublished variant under an internal ID such as drafts.<documentId>, but that prefix belongs to the document ID—not to the slug. With perspective: drafts, Sanity resolves the draft over the published variant while preserving the normal slug-based query.'),
+    code('Draft-aware post query','groq','good',`*[_type == "post" && slug.current == $slug][0]{
+  _id,
+  title,
+  slug,
+  body
+}`),
+    callout('warning','Do not put drafts.<id> in the preview URL','A URL such as /posts/drafts.abc123 mixes two different identifiers. Use the document ID only when debugging raw documents or building document-to-URL mappings. For the rendered preview route, pass the normal slug and let the drafts perspective select the draft variant.'),
+    h2('When the draft is correct but the page still looks wrong'),
+    p('A successful draft query proves that the data reached Next.js; it does not prove that every Portable Text value can be rendered. If plain fields such as the title update but the article body is missing, unstyled, or structurally wrong, inspect the Portable Text component map.'),
+    p('Current @portabletext/react versions call these renderers components. Older examples may call them serializers. Every custom object inserted into the Portable Text array—images, code blocks, callouts, embeds, or custom block styles—needs a matching renderer. The query must also return the fields that renderer expects.'),
+    code('components/ArticleBody.tsx','typescript','good',`import {PortableText, type PortableTextComponents} from '@portabletext/react'
+
+const components: Partial<PortableTextComponents> = {
+  block: {
+    h2: ({children}) => <h2 className="article-heading">{children}</h2>,
+    blockquote: ({children}) => <blockquote>{children}</blockquote>,
+  },
+  types: {
+    codeBlock: ({value}) => (
+      <pre><code>{value.code}</code></pre>
+    ),
+    image: ({value}) => <SanityImage value={value} />,
+  },
+  marks: {
+    link: ({children, value}) => <a href={value?.href}>{children}</a>,
+  },
+}
+
+export function ArticleBody({value}) {
+  return <PortableText value={value} components={components} />
+}`),
+    p('Log the body array once on the server and compare each _type and block style with the component map. If the data is present in that array but absent from the DOM, the problem is rendering rather than Draft Mode. Also check the surrounding CSS before changing the query: default Portable Text output is intentionally unstyled.'),
     h2('Seven failure patterns and what they mean'),
     h3('The enable route returns 401 or 403'),
     p('The preview secret could not be validated. Confirm the deployed SANITY_API_READ_TOKEN exists, belongs to the same project and dataset, and has Viewer access. Also confirm the Studio generated a preview secret and that the route uses an authenticated client.'),
