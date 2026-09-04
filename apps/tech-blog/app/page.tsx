@@ -1,12 +1,19 @@
 import { AUTHOR, SITE_NAME, SITE_URL } from "../lib/site";
-import { getGuideArticles } from "../lib/sanity";
+import {
+  GUIDES_PER_PAGE,
+  getGuideArticleCount,
+  getGuideArticles,
+} from "../lib/sanity";
 import { DevFieldnotesHome } from "../src/DevFieldnotesHome";
 import { JsonLd } from "../src/JsonLd";
 
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const guides = await getGuideArticles();
+  const [guides, guideCount] = await Promise.all([
+    getGuideArticles({ limit: GUIDES_PER_PAGE }),
+    getGuideArticleCount(),
+  ]);
 
   return (
     <>
@@ -22,7 +29,10 @@ export default async function HomePage() {
           publisher: { "@id": `${AUTHOR.url}#person` },
         }}
       />
-      <DevFieldnotesHome guides={guides} />
+      <DevFieldnotesHome
+        guides={guides}
+        hasMoreGuides={guideCount > GUIDES_PER_PAGE}
+      />
     </>
   );
 }
