@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button";
 
 const links = [
   { href: "/journeys", label: "Learn" },
+  {
+    href: "/topics/mathematical-miracles-of-the-quran",
+    label: "Quran Patterns",
+  },
   { href: "/about", label: "About" },
   { href: "/faith-leaders", label: "Share" },
 ];

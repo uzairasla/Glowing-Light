@@ -509,6 +509,21 @@ const taxonomy = defineType({
       rows: 3,
     }),
     defineField({
+      name: "kind",
+      title: "Presentation",
+      description:
+        "Choose whether this taxonomy is presented as an ordered learning journey or a browsable topic collection.",
+      type: "string",
+      initialValue: "journey",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "Guided journey", value: "journey" },
+          { title: "Topic or series", value: "topic" },
+        ],
+      },
+    }),
+    defineField({
       name: "parent",
       title: "Parent taxonomy",
       description:

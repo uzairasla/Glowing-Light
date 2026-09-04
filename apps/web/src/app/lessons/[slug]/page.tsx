@@ -44,7 +44,7 @@ export default async function LessonPage({ params }: Props) {
     <main className="container py-16">
       <article className="mx-auto max-w-4xl">
         <Link
-          href={`/journeys/${lesson.journey.slug}`}
+          href={lesson.journey.href ?? `/journeys/${lesson.journey.slug}`}
           className="text-sm font-bold text-primary"
         >
           {lesson.journey.title}
