@@ -1,14 +1,25 @@
 import type { MetadataRoute } from "next";
-import { getJourneys, getPublishedLessonSitemapEntries } from "@/lib/content";
+import {
+  getJourneys,
+  getPublishedLessonSitemapEntries,
+  getTopics,
+} from "@/lib/content";
 import { env } from "@/lib/env";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = env.NEXT_PUBLIC_SITE_URL;
-  const [journeys, publishedLessons] = await Promise.all([
+  const [journeys, topics, publishedLessons] = await Promise.all([
     getJourneys(),
+    getTopics(),
     getPublishedLessonSitemapEntries(),
   ]);
-  const staticRoutes = ["", "/about", "/journeys", "/faith-leaders"];
+  const staticRoutes = [
+    "",
+    "/about",
+    "/journeys",
+    "/topics",
+    "/faith-leaders",
+  ];
 
   return [
     ...staticRoutes.map((route) => ({
@@ -20,6 +31,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...journeys.map((journey) => ({
       url: `${base}/journeys/${journey.slug}`,
       changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
+    ...topics.map((topic) => ({
+      url: `${base}/topics/${topic.slug}`,
+      changeFrequency: "weekly" as const,
       priority: 0.8,
     })),
     ...publishedLessons.map((lesson) => ({

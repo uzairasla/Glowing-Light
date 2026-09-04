@@ -17,8 +17,16 @@ export type PublicQuestion = {
 };
 
 export type LessonWithJourney = LessonSummary & {
-  journey: Pick<JourneyDefinition, "title" | "slug">;
+  journey: Pick<JourneyDefinition, "title" | "slug"> & { href?: string };
   body?: RichTextBlock[];
+};
+
+export type TopicCollection = {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  articles: LessonSummary[];
 };
 
 export type RichTextBlock = {
@@ -70,6 +78,7 @@ type SanityTaxonomy = {
   title?: string;
   slug?: string;
   description?: string;
+  kind?: "journey" | "topic";
   articles?: SanityArticle[];
   children?: SanityTaxonomy[];
 };
@@ -78,14 +87,16 @@ type SanityArticleDetail = SanityArticle & {
   taxonomies?: Array<{
     title?: string;
     slug?: string;
+    kind?: "journey" | "topic";
     parent?: {
       title?: string;
       slug?: string;
+      kind?: "journey" | "topic";
     };
   }>;
 };
 
-const taxonomyQuery = `*[_type == "taxonomy" && !defined(parent)] | order(title asc) {
+const taxonomyQuery = `*[_type == "taxonomy" && !defined(parent) && coalesce(kind, "journey") == "journey"] | order(title asc) {
   _id,
   title,
   "slug": slug.current,
@@ -110,6 +121,20 @@ const taxonomyQuery = `*[_type == "taxonomy" && !defined(parent)] | order(title 
   }
 }`;
 
+const topicQuery = `*[_type == "taxonomy" && kind == "topic"] | order(title asc) {
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  kind,
+  "articles": *[_type == "article" && references(^._id)] | order(_createdAt asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    description
+  }
+}`;
+
 const articleBySlugQuery = `*[_type == "article" && slug.current == $slug][0] {
   _id,
   title,
@@ -125,9 +150,11 @@ const articleBySlugQuery = `*[_type == "article" && slug.current == $slug][0] {
   taxonomies[]->{
     title,
     "slug": slug.current,
+    kind,
     parent->{
       title,
-      "slug": slug.current
+      "slug": slug.current,
+      kind
     }
   }
 }`;
@@ -172,6 +199,23 @@ export async function getJourneyBySlug(
 ): Promise<JourneyDefinition | undefined> {
   const allJourneys = await getJourneys();
   return allJourneys.find((journey) => journey.slug === slug);
+}
+
+export async function getTopics(): Promise<TopicCollection[]> {
+  try {
+    const sanityTopics = await sanityFetch<SanityTaxonomy[]>(topicQuery);
+
+    return (sanityTopics ?? []).map(mapSanityTopic).filter(isPresent);
+  } catch {
+    return [];
+  }
+}
+
+export async function getTopicBySlug(
+  slug: string,
+): Promise<TopicCollection | undefined> {
+  const topics = await getTopics();
+  return topics.find((topic) => topic.slug === slug);
 }
 
 export async function getPublicQuestions(): Promise<PublicQuestion[]> {
@@ -243,6 +287,21 @@ function mapSanityTaxonomy(taxonomy: SanityTaxonomy): JourneyDefinition | null {
   };
 }
 
+function mapSanityTopic(taxonomy: SanityTaxonomy): TopicCollection | null {
+  if (!taxonomy.title || !taxonomy.slug) {
+    return null;
+  }
+
+  return {
+    id: taxonomy._id,
+    slug: taxonomy.slug,
+    title: taxonomy.title,
+    description:
+      taxonomy.description ?? "A browsable collection of related articles.",
+    articles: (taxonomy.articles ?? []).map(mapSanityArticle).filter(isPresent),
+  };
+}
+
 function mapSanityArticle(article: SanityArticle): LessonSummary | null {
   if (!article.title || !article.slug) {
     return null;
@@ -278,6 +337,10 @@ function mapSanityArticleDetail(
     journey: {
       title: journeyTaxonomy.title,
       slug: journeyTaxonomy.slug,
+      href:
+        journeyTaxonomy.kind === "topic"
+          ? `/topics/${journeyTaxonomy.slug}`
+          : `/journeys/${journeyTaxonomy.slug}`,
     },
   };
 }
