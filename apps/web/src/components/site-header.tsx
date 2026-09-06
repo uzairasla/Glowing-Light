@@ -42,38 +42,46 @@ export async function SiteHeader() {
               />
             </Link>
 
-            <div className="invisible absolute left-1/2 top-full z-50 w-80 -translate-x-1/2 pt-2 opacity-0 transition duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-              <div className="overflow-hidden rounded-2xl border bg-white p-2 text-foreground shadow-xl">
-                <div className="px-3 pb-2 pt-3">
+            <div className="invisible absolute left-1/2 top-full z-50 w-[min(64rem,calc(100vw-2rem))] -translate-x-1/2 pt-2 opacity-0 transition duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+              <div className="overflow-hidden rounded-2xl border bg-white p-3 text-foreground shadow-xl">
+                <div className="flex items-center justify-between gap-6 px-3 pb-3 pt-2">
                   <p className="text-xs font-extrabold uppercase tracking-[.16em] text-teal">
                     Browse topics
                   </p>
-                </div>
-                {topics.map((topic) => (
                   <Link
-                    key={topic.id}
-                    href={`/topics/${topic.slug}`}
-                    className="block rounded-xl px-3 py-3 transition hover:bg-teal-50 focus-visible:bg-teal-50 focus-visible:outline-none"
+                    href="/topics"
+                    className="shrink-0 text-sm font-bold text-teal transition hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
-                    <span className="block font-bold text-navy">{topic.title}</span>
-                    <span className="mt-1 block text-xs leading-5 text-muted-foreground">
-                      {topic.articles.length}{" "}
-                      {topic.articles.length === 1 ? "article" : "articles"}
-                    </span>
+                    View all topics
                   </Link>
-                ))}
-                <Link
-                  href="/topics"
-                  className="mt-1 block rounded-xl border-t px-3 py-3 font-bold text-teal transition hover:bg-teal-50 focus-visible:bg-teal-50 focus-visible:outline-none"
-                >
-                  View all topics
-                </Link>
+                </div>
+                <div className="grid grid-cols-3 gap-2 lg:grid-cols-4">
+                  {topics.map((topic) => (
+                    <Link
+                      key={topic.id}
+                      href={`/topics/${topic.slug}`}
+                      className="min-w-0 rounded-xl border border-transparent px-3 py-3 transition hover:border-teal-100 hover:bg-teal-50 focus-visible:border-teal-100 focus-visible:bg-teal-50 focus-visible:outline-none"
+                    >
+                      <span className="block font-bold leading-5 text-navy">
+                        {topic.title}
+                      </span>
+                      <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                        {topic.articles.length}{" "}
+                        {topic.articles.length === 1 ? "article" : "articles"}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
           {links.map((link) => (
-            <Link key={link.href} href={link.href} className="hover:text-primary">
+            <Link
+              key={link.href}
+              href={link.href}
+              className="hover:text-primary"
+            >
               {link.label}
             </Link>
           ))}
