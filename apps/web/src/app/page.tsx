@@ -14,37 +14,34 @@ import {
 import { JourneyCard } from "@/components/journey-card";
 import { JsonLd } from "@/components/json-ld";
 import { Button } from "@/components/ui/button";
-import {
-  getJourneys,
-  getPublishedLessonSitemapEntries,
-} from "@/lib/content";
+import { getJourneys, getPublishedLessonSitemapEntries } from "@/lib/content";
 import { env } from "@/lib/env";
 
 export const metadata: Metadata = {
-  title: "Explore One Abrahamic Faith Through Three Traditions",
+  title: "One God, One Message, A Shared Prophetic Story",
   description:
-    "Explore one Abrahamic faith through Judaism, Christianity, and Islam, following shared themes without choosing sides.",
+    "Explore the Abrahamic faith as a continuous prophetic tradition and the Quranic view that sincere submission to God is the faith taught by every prophet.",
   alternates: { canonical: "/" },
 };
 
 const principles = [
   {
     icon: BookOpen,
-    title: "Follow one theme",
+    title: "Trace the prophetic call",
     description:
-      "Trace each topic through Judaism, Christianity, and Islam as expressions of one Abrahamic inheritance.",
+      "Follow the continuous message from Adam through Abraham, Moses, Jesus, and Muhammad—peace be upon them all.",
   },
   {
     icon: ShieldCheck,
-    title: "Observe without taking sides",
+    title: "Examine the history",
     description:
-      "Let each tradition speak through its own scriptures, history, and teachings with equal care and attention.",
+      "Explore how prophetic teachings were preserved, interpreted, institutionalized, and sometimes changed over time.",
   },
   {
     icon: Heart,
-    title: "Discover the unity",
+    title: "Consider the Quran's claim",
     description:
-      "Look beyond labels to understand the shared Abrahamic faith that runs through all three traditions.",
+      "Examine the Quran's claim to confirm earlier revelation and restore clarity to the original Abrahamic faith.",
   },
 ];
 
@@ -73,9 +70,7 @@ export default async function HomePage() {
     getJourneys(),
     getPublishedLessonSitemapEntries(),
   ]);
-  const publishedSlugs = new Set(
-    publishedLessons.map((lesson) => lesson.slug),
-  );
+  const publishedSlugs = new Set(publishedLessons.map((lesson) => lesson.slug));
   const questioningJourney = journeys.find(
     (journey) => journey.slug === "questioning-religion",
   );
@@ -96,10 +91,7 @@ export default async function HomePage() {
 
   for (const journey of journeys) {
     for (const lesson of journey.lessons) {
-      if (
-        publishedSlugs.has(lesson.slug) &&
-        !articlesById.has(lesson.id)
-      ) {
+      if (publishedSlugs.has(lesson.slug) && !articlesById.has(lesson.id)) {
         articlesById.set(lesson.id, {
           ...lesson,
           journeyTitle: journey.title,
@@ -146,15 +138,18 @@ export default async function HomePage() {
               understanding
             </div>
             <h1 className="font-serif text-5xl font-bold leading-[1.02] text-balance sm:text-6xl lg:text-[5.4rem]">
-              Three traditions.
+              One God. One message.
               <span className="mt-2 block text-[#e6bd69]">
-                One Abrahamic faith.
+                A shared prophetic story.
               </span>
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 md:text-xl">
-              Deep-dive into the same questions through Judaism, Christianity,
-              and Islam. Follow the evidence across all three without choosing a
-              side.
+              Explore the Abrahamic faith as a continuous prophetic
+              tradition—from Adam and Abraham through Moses, Jesus, and
+              Muhammad, peace be upon them all. Examine their shared call to
+              worship one God, how that message was understood over time, and
+              the Quranic view that sincere submission to God is the faith
+              taught by every prophet.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Button
@@ -232,14 +227,16 @@ export default async function HomePage() {
       <section className="container py-20 md:py-28">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-extrabold uppercase tracking-[.2em] text-teal">
-            One faith, observed through three traditions
+            A shared prophetic tradition
           </p>
           <h2 className="mt-4 font-serif text-4xl font-bold text-balance md:text-5xl">
-            Explore the whole Abrahamic tradition.
+            Explore one message across generations.
           </h2>
           <p className="mt-5 text-lg leading-8 text-muted-foreground">
-            Study each topic across Judaism, Christianity, and Islam to see the
-            shared faith, revelation, and purpose connecting all three.
+            Follow the Abrahamic story from Adam and Abraham through Moses,
+            Jesus, and Muhammad. Consider the call to worship one God, the ways
+            communities understood that message, and the Quranic account of
+            sincere submission to God.
           </p>
         </div>
         <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -360,15 +357,16 @@ export default async function HomePage() {
       <section className="container py-20 md:py-28">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-extrabold uppercase tracking-[.2em] text-teal">
-            No sides. One shared search. One Truth.
+            One God. One message. A shared prophetic story.
           </p>
           <h2 className="mt-4 font-serif text-4xl font-bold md:text-5xl">
             Look beyond the labels.
           </h2>
           <p className="mt-5 text-lg leading-8 text-muted-foreground">
             Judaism, Christianity, and Islam are often studied separately. Here,
-            we place them in one continuous Abrahamic conversation and explore
-            how each tradition approaches the same enduring questions.
+            we place them in one continuous Abrahamic history and examine how
+            the prophetic call was preserved, interpreted, and understood over
+            time.
           </p>
           <Button asChild className="mt-7">
             <Link href="/about">
@@ -383,11 +381,11 @@ export default async function HomePage() {
         <div className="islamic-grid overflow-hidden rounded-[2rem] bg-navy px-6 py-14 text-center text-white shadow-2xl md:px-12 md:py-16">
           <Sparkles className="mx-auto size-7 text-gold" />
           <h2 className="mx-auto mt-5 max-w-2xl font-serif text-4xl font-bold md:text-5xl">
-            One question. Three traditions. One journey.
+            Follow the message from Adam to Muhammad.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-slate-300">
-            Deep-dive into a topic through Jewish, Christian, and Islamic
-            sources, observing the whole Abrahamic faith without picking sides.
+            Explore how every prophet called humanity to worship the same
+            Almighty God and submit to His guidance.
           </p>
           <Button
             asChild
