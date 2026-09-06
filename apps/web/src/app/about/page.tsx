@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn how Glowing Light traces the shared prophetic call and examines the Quran's claim to restore clarity to the original Abrahamic faith.",
+    "Understand the Abrahamic faith as one continuous message from Adam through Muhammad, calling humanity to worship and submit to Almighty God.",
   alternates: { canonical: "/about" },
 };
 
@@ -14,8 +14,8 @@ export default function AboutPage() {
     <main className="container py-16">
       <SectionHeading
         kicker="About"
-        title="Tracing one prophetic call through Abrahamic history."
-        description="Glowing Light traces the shared call of the Abrahamic prophets: worship the one God and submit to His guidance. It explores how their teachings were preserved, interpreted, institutionalized, and sometimes changed—and examines the Quran's claim to restore clarity to that original faith."
+        title="One God. One message. One line of prophets."
+        description="Understand the Abrahamic faith in its true essence: one continuous message beginning with Adam and carried through Abraham, Moses, Jesus, and finally Muhammad—peace be upon them all. Every prophet called humanity to worship the one Almighty God and submit fully to His guidance. To follow that message completely is to be a muslim in the original Arabic sense: one who willingly submits and surrenders to God."
       />
       <div className="mt-10 grid gap-5 md:grid-cols-3">
         {[

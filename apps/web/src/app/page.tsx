@@ -18,9 +18,9 @@ import { getJourneys, getPublishedLessonSitemapEntries } from "@/lib/content";
 import { env } from "@/lib/env";
 
 export const metadata: Metadata = {
-  title: "Explore One Abrahamic Faith Through Three Traditions",
+  title: "One God, One Message, One Line of Prophets",
   description:
-    "Trace the shared call of the Abrahamic prophets and examine the Quran's claim to restore clarity to their original faith of submission to one God.",
+    "Understand the Abrahamic faith as one continuous message from Adam through Muhammad, calling humanity to worship and submit to Almighty God.",
   alternates: { canonical: "/" },
 };
 
@@ -29,7 +29,7 @@ const principles = [
     icon: BookOpen,
     title: "Trace the prophetic call",
     description:
-      "Follow the recurring call to worship one God and submit to His guidance from Abraham through the later prophets.",
+      "Follow the continuous message from Adam through Abraham, Moses, Jesus, and Muhammad—peace be upon them all.",
   },
   {
     icon: ShieldCheck,
@@ -138,15 +138,16 @@ export default async function HomePage() {
               understanding
             </div>
             <h1 className="font-serif text-5xl font-bold leading-[1.02] text-balance sm:text-6xl lg:text-[5.4rem]">
-              Three traditions.
+              One God. One message.
               <span className="mt-2 block text-[#e6bd69]">
-                One Abrahamic faith.
+                One line of prophets.
               </span>
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 md:text-xl">
-              Follow the shared call of the Abrahamic prophets: worship the one
-              God and submit to His guidance. Explore how that message was
-              preserved, interpreted, and understood over time.
+              Beginning with Adam and carried through Abraham, Moses, Jesus, and
+              finally Muhammad—peace be upon them all—every prophet called
+              humanity to worship the one Almighty God and submit fully to His
+              guidance.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Button
@@ -224,17 +225,18 @@ export default async function HomePage() {
       <section className="container py-20 md:py-28">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-extrabold uppercase tracking-[.2em] text-teal">
-            One faith, observed through three traditions
+            One continuous message through every prophet
           </p>
           <h2 className="mt-4 font-serif text-4xl font-bold text-balance md:text-5xl">
-            Explore the whole Abrahamic tradition.
+            Understand the Abrahamic faith in its true essence.
           </h2>
           <p className="mt-5 text-lg leading-8 text-muted-foreground">
-            Glowing Light traces the shared call of the Abrahamic prophets:
-            worship the one God and submit to His guidance. It explores how
-            their teachings were preserved, interpreted, institutionalized, and
-            sometimes changed—and examines the Quran&apos;s claim to restore
-            clarity to that original faith.
+            It is one continuous message beginning with Adam and carried through
+            Abraham, Moses, Jesus, and finally Muhammad—peace be upon them all.
+            Every prophet called humanity to worship the one Almighty God and
+            submit fully to His guidance. To follow that message completely is
+            to be a <em>muslim</em> in the original Arabic sense: one who
+            willingly submits and surrenders to God.
           </p>
         </div>
         <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -355,7 +357,7 @@ export default async function HomePage() {
       <section className="container py-20 md:py-28">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-extrabold uppercase tracking-[.2em] text-teal">
-            One God. One prophetic call. One shared history.
+            One God. One message. One line of prophets.
           </p>
           <h2 className="mt-4 font-serif text-4xl font-bold md:text-5xl">
             Look beyond the labels.
@@ -379,12 +381,11 @@ export default async function HomePage() {
         <div className="islamic-grid overflow-hidden rounded-[2rem] bg-navy px-6 py-14 text-center text-white shadow-2xl md:px-12 md:py-16">
           <Sparkles className="mx-auto size-7 text-gold" />
           <h2 className="mx-auto mt-5 max-w-2xl font-serif text-4xl font-bold md:text-5xl">
-            One question. Three traditions. One journey.
+            Follow the message from Adam to Muhammad.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg leading-8 text-slate-300">
-            Follow the evidence across Jewish, Christian, and Islamic sources,
-            then consider the Quran&apos;s claim to restore the original call to
-            submission to God.
+            Explore how every prophet called humanity to worship the same
+            Almighty God and submit to His guidance.
           </p>
           <Button
             asChild
