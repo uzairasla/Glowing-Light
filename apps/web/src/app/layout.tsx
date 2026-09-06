@@ -12,23 +12,23 @@ export const metadata: Metadata = {
     template: "%s | Glowing Light",
   },
   description:
-    "Understand the Abrahamic faith as one continuous message from Adam through Muhammad, calling humanity to worship and submit to Almighty God.",
+    "Explore the Abrahamic faith as a continuous prophetic tradition and the Quranic view that sincere submission to God is the faith taught by every prophet.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Glowing Light",
+    title: "One God. One Message. A Shared Prophetic Story.",
     description:
-      "One God. One message. One line of prophets—from Adam through Muhammad, peace be upon them all.",
+      "Explore the shared call to worship one God, how it was understood over time, and the Quranic view of sincere submission to God.",
     url: "/",
     siteName: "Glowing Light",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Glowing Light",
+    title: "One God. One Message. A Shared Prophetic Story.",
     description:
-      "Understand the one continuous Abrahamic message: worship Almighty God and submit to His guidance.",
+      "Explore the Abrahamic faith as a continuous prophetic tradition from Adam through Muhammad.",
   },
   robots: { index: true, follow: true },
 };
@@ -46,7 +46,7 @@ export default function RootLayout({
           {children}
           <footer className="border-t bg-white/70 py-8 text-center text-sm text-muted-foreground">
             <div className="container flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
-              <p>One God. One message. One line of prophets.</p>
+              <p>One God. One message. A shared prophetic story.</p>
               <div className="flex gap-5">
                 <Link href="/journeys" className="hover:text-primary">
                   Learning journeys

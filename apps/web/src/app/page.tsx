@@ -18,9 +18,9 @@ import { getJourneys, getPublishedLessonSitemapEntries } from "@/lib/content";
 import { env } from "@/lib/env";
 
 export const metadata: Metadata = {
-  title: "One God, One Message, One Line of Prophets",
+  title: "One God, One Message, A Shared Prophetic Story",
   description:
-    "Understand the Abrahamic faith as one continuous message from Adam through Muhammad, calling humanity to worship and submit to Almighty God.",
+    "Explore the Abrahamic faith as a continuous prophetic tradition and the Quranic view that sincere submission to God is the faith taught by every prophet.",
   alternates: { canonical: "/" },
 };
 
@@ -140,14 +140,16 @@ export default async function HomePage() {
             <h1 className="font-serif text-5xl font-bold leading-[1.02] text-balance sm:text-6xl lg:text-[5.4rem]">
               One God. One message.
               <span className="mt-2 block text-[#e6bd69]">
-                One line of prophets.
+                A shared prophetic story.
               </span>
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 md:text-xl">
-              Beginning with Adam and carried through Abraham, Moses, Jesus, and
-              finally Muhammad—peace be upon them all—every prophet called
-              humanity to worship the one Almighty God and submit fully to His
-              guidance.
+              Explore the Abrahamic faith as a continuous prophetic
+              tradition—from Adam and Abraham through Moses, Jesus, and
+              Muhammad, peace be upon them all. Examine their shared call to
+              worship one God, how that message was understood over time, and
+              the Quranic view that sincere submission to God is the faith
+              taught by every prophet.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Button
@@ -225,18 +227,16 @@ export default async function HomePage() {
       <section className="container py-20 md:py-28">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-extrabold uppercase tracking-[.2em] text-teal">
-            One continuous message through every prophet
+            A shared prophetic tradition
           </p>
           <h2 className="mt-4 font-serif text-4xl font-bold text-balance md:text-5xl">
-            Understand the Abrahamic faith in its true essence.
+            Explore one message across generations.
           </h2>
           <p className="mt-5 text-lg leading-8 text-muted-foreground">
-            It is one continuous message beginning with Adam and carried through
-            Abraham, Moses, Jesus, and finally Muhammad—peace be upon them all.
-            Every prophet called humanity to worship the one Almighty God and
-            submit fully to His guidance. To follow that message completely is
-            to be a <em>muslim</em> in the original Arabic sense: one who
-            willingly submits and surrenders to God.
+            Follow the Abrahamic story from Adam and Abraham through Moses,
+            Jesus, and Muhammad. Consider the call to worship one God, the ways
+            communities understood that message, and the Quranic account of
+            sincere submission to God.
           </p>
         </div>
         <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -357,7 +357,7 @@ export default async function HomePage() {
       <section className="container py-20 md:py-28">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-extrabold uppercase tracking-[.2em] text-teal">
-            One God. One message. One line of prophets.
+            One God. One message. A shared prophetic story.
           </p>
           <h2 className="mt-4 font-serif text-4xl font-bold md:text-5xl">
             Look beyond the labels.
