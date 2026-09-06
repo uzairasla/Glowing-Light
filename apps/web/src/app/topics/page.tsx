@@ -8,7 +8,7 @@ import { getTopics } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Topics",
   description:
-    "Browse article collections about Quranic patterns and other focused subjects from Glowing Light.",
+    "Browse focused collections about Abrahamic faiths, scripture, belief, history, judgment, and Quranic studies from Glowing Light.",
   alternates: { canonical: "/topics" },
 };
 
@@ -23,7 +23,7 @@ export default async function TopicsPage() {
       <SectionHeading
         kicker="Explore by subject"
         title="Topics"
-        description="Browse focused article collections without following a fixed lesson order. Each topic grows as new research and analysis are published."
+        description="Browse focused article collections across Abrahamic belief, scripture, history, ethics, and religious life. Each topic grows as new research and analysis are published."
       />
 
       {topics.length > 0 ? (
