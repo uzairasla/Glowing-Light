@@ -40,10 +40,35 @@ export default async function TopicPage({ params }: Props) {
     notFound();
   }
 
+  const isQuranicPatternSeries =
+    topic.slug === "mathematical-miracles-of-the-quran";
+  const pageCopy = isQuranicPatternSeries
+    ? {
+        heroKicker: "Quranic numerical patterns",
+        sectionKicker: "Examine every claim",
+        sectionTitle: "Articles in this series",
+        sectionDescription:
+          "Each article states its counting rule, checks the complete Arabic data, and separates a verified pattern from conclusions drawn about it.",
+        itemLabel: "Pattern",
+        articleLink: "Read the analysis",
+      }
+    : {
+        heroKicker: "Explore the subject",
+        sectionKicker: "Read and compare",
+        sectionTitle: "Articles in this topic",
+        sectionDescription:
+          "Explore source-backed articles that approach this subject across the Abrahamic traditions with care, context, and clear distinctions.",
+        itemLabel: "Article",
+        articleLink: "Read the article",
+      };
+
   return (
     <main>
       <section className="relative isolate overflow-hidden border-b border-white/10 bg-navy py-20 text-white md:py-28">
-        <div className="absolute inset-0 islamic-grid opacity-25" aria-hidden="true" />
+        <div
+          className="absolute inset-0 islamic-grid opacity-25"
+          aria-hidden="true"
+        />
         <div
           className="absolute -right-24 -top-48 size-[32rem] rounded-full bg-teal/25 blur-3xl"
           aria-hidden="true"
@@ -52,7 +77,7 @@ export default async function TopicPage({ params }: Props) {
           <div className="max-w-4xl">
             <p className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.2em] text-amber-200">
               <Sparkles className="size-4" aria-hidden="true" />
-              Quranic numerical patterns
+              {pageCopy.heroKicker}
             </p>
             <h1 className="mt-5 font-serif text-5xl font-bold leading-tight text-balance md:text-7xl">
               {topic.title}
@@ -62,7 +87,8 @@ export default async function TopicPage({ params }: Props) {
             </p>
             <div className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold backdrop-blur">
               <BookOpen className="size-4 text-gold" aria-hidden="true" />
-              {topic.articles.length} {topic.articles.length === 1 ? "article" : "articles"}
+              {topic.articles.length}{" "}
+              {topic.articles.length === 1 ? "article" : "articles"}
             </div>
           </div>
         </div>
@@ -71,14 +97,13 @@ export default async function TopicPage({ params }: Props) {
       <section className="container py-16 md:py-24">
         <div className="mb-10 max-w-2xl">
           <p className="text-xs font-extrabold uppercase tracking-[.2em] text-teal">
-            Examine every claim
+            {pageCopy.sectionKicker}
           </p>
           <h2 className="mt-3 font-serif text-4xl font-bold md:text-5xl">
-            Articles in this series
+            {pageCopy.sectionTitle}
           </h2>
           <p className="mt-4 text-lg leading-8 text-muted-foreground">
-            Each article states its counting rule, checks the complete Arabic data,
-            and separates a verified pattern from conclusions drawn about it.
+            {pageCopy.sectionDescription}
           </p>
         </div>
 
@@ -89,9 +114,12 @@ export default async function TopicPage({ params }: Props) {
                 key={article.id}
                 className="group relative flex min-h-72 flex-col overflow-hidden p-7 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
-                <div className="absolute inset-x-0 top-0 h-1.5 bg-teal" aria-hidden="true" />
+                <div
+                  className="absolute inset-x-0 top-0 h-1.5 bg-teal"
+                  aria-hidden="true"
+                />
                 <p className="text-xs font-extrabold uppercase tracking-[.15em] text-teal">
-                  Pattern {String(index + 1).padStart(2, "0")}
+                  {pageCopy.itemLabel} {String(index + 1).padStart(2, "0")}
                 </p>
                 <h2 className="mt-5 font-serif text-3xl font-bold leading-tight text-balance">
                   <Link
@@ -108,7 +136,7 @@ export default async function TopicPage({ params }: Props) {
                   href={`/lessons/${article.slug}`}
                   className="mt-7 inline-flex items-center gap-2 font-bold text-navy transition group-hover:text-teal"
                 >
-                  Read the analysis
+                  {pageCopy.articleLink}
                   <ArrowRight
                     className="size-4 transition group-hover:translate-x-1"
                     aria-hidden="true"
